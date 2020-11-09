@@ -14,4 +14,24 @@
         <result property="productTitle" column="product_title"/>
         <result property="promotionPrice" column="promotion_price"/>
     </resultMap>
+
+<sql id="product">
+        product_name,product_title,description,pic,album_pics,price
+        ,promotion_price,gift_point,category_id
+    </sql>
+
+<select id="selectProductByName" resultMap="BaseResultMap">
+select <include refid="product"/>
+from t_product
+where product_name like concat('%',#{pName},'%')
+</select>
+
+<select id="selectProductDetails" resultMap="BaseResultMap">
+select <include refid="product"/> from t_product where product_id=#{pid}
+</select>
+
+<select id="selectLikeTop" resultMap="BaseResultMap">
+
+</select>
+
 </mapper>
