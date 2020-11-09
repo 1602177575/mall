@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BaseException extends RuntimeException {
     private int status;
-    private String msg;
+    private String message;
 
     public BaseException(StatusCode statusCode) {
         this.status = statusCode.getStatus();
-        this.msg = statusCode.getMsg();
+        this.message = statusCode.getMessage();
     }
 }
