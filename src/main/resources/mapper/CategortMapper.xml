@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.www.mapper.CategoryMapper">
+<resultMap id="BaseResultMap" type="Category">
+<id column="id" property="id"/>
+<result column="categoryName" property="categoryName"  />
+</resultMap>
+
+ <sql id="product">
+        product_id,product_name,product_title,description,pic,album_pics,price
+        ,promotion_price,gift_point,category_id
+    </sql>
+
+<select id="selectCategoryById" resultMap="com.mall.www.mapper.ProductMapper.BaseResultMap">
+select  <include refid="product"/>
+from t_product where category_id=#{pid}
+</select>
+
+<select id="selectCategoryIDByName" resultType="integer">
+select id from t_category where categoryName=#{pName}
+</select>
+
+<!-- curPage 当前第几页-->
+<!--     * pageSize 一页多少数据-->
+<!--     *  limit  (curPage-1)*pageSize,pageSize-->
+
+<select id="selectCategoryList" resultMap="com.mall.www.mapper.ProductMapper.BaseResultMap">
+select <include refid="product" />
+from t_product where category_id=#{pid}
+limit #{curPage},#{pageSize}
+</select>
+
+
+<select id="selectCategoryTopName" resultType="java.lang.String">
+select CategoryName from t_category limit #{value}
+</select>
+
+<select id="selectCategoryTopById" resultMap="com.mall.www.mapper.ProductMapper.BaseResultMap">
+select <include refid="product"/>
+from t_product
+where category_id=#{cid} limit #{value}
+</select>
+   
+</mapper>

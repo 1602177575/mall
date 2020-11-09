@@ -2,13 +2,15 @@ package com.mall.www.entity;
 
 import java.math.BigDecimal;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
+@ToString
 public class Product {
     /**
      * 主键
      */
-    private Long productId;
+    private int productId;
 
     /**
      * 商品名称
