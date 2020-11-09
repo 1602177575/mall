@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.www.mapper.AddressMapper">
+    <resultMap id="BaseResultMap" type="Address">
+        <id property="addressId" column="address_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="addressAlias" column="address_alias"/>
+        <result property="area" column="area"/>
+        <result property="deleteStatus" column="delete_status"/>
+        <result property="detailAddress" column="detail_address"/>
+        <result property="email" column="email"/>
+        <result property="fixedPhone" column="fixed_phone"/>
+        <result property="name" column="name"/>
+        <result property="postcode" column="postcode"/>
+        <result property="phone" column="phone"/>
+        <result property="sendStatus" column="send_status"/>
+    </resultMap>
+    <select id="selectList" resultMap="BaseResultMap">
+        select address_id,
+               user_id,
+               name,
+               area,
+               detail_address,
+               phone,
+               fixed_phone,
+               postcode,
+               email,
+               address_alias,
+               send_status,
+               delete_status
+        from t_address
+        where delete_status = 0
+          and user_id = #{userId}
+    </select>
+</mapper>
