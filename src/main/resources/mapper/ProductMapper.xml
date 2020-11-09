@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.www.mapper.ProductMapper">
+    <resultMap id="BaseResultMap" type="Product">
+        <id property="productId" column="product_id"/>
+        <result property="albumPics" column="album_pics"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="deleteStatus" column="delete_status"/>
+        <result property="description" column="description"/>
+        <result property="giftPoint" column="gift_point"/>
+        <result property="pic" column="pic"/>
+        <result property="price" column="price"/>
+        <result property="productName" column="product_name"/>
+        <result property="productTitle" column="product_title"/>
+        <result property="promotionPrice" column="promotion_price"/>
+    </resultMap>
+</mapper>
