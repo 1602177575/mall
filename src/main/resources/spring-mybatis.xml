@@ -6,7 +6,7 @@
     <bean id="sessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
-        <property name="typeAliasesPackage" value="com.smart.tx.entity"/>
+        <property name="typeAliasesPackage" value="com.mall.www.entity"/>
     </bean>
     <!--配置扫描Mapper接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
