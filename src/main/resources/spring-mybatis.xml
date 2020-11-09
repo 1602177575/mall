@@ -11,6 +11,6 @@
     <!--配置扫描Mapper接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sessionFactoryBean"/>
-        <property name="basePackage" value="com.smart.tx.mapper"/>
+        <property name="basePackage" value="com.mall.www.mapper"/>
     </bean>
 </beans>
