@@ -8,4 +8,54 @@
         <result property="quantity" column="quantity"/>
         <result property="userId" column="user_id"/>
     </resultMap>
+    <resultMap id="CartsBoResultMap" type="com.mall.www.common.bo.CartsBo" extends="BaseResultMap">
+        <association property="product" javaType="com.mall.www.entity.Product"
+                     resultMap="com.mall.www.mapper.ProductMapper.BaseResultMap"/>
+    </resultMap>
+    <select id="selectList" resultMap="CartsBoResultMap">
+        select tc.cart_id,
+               tc.product_id,
+               tc.user_id,
+               tc.quantity,
+               tc.delete_status,
+               tp.product_id,
+               tp.product_name,
+               tp.product_title,
+               tp.description,
+               tp.pic,
+               tp.album_pics,
+               tp.price,
+               tp.promotion_price,
+               tp.gift_point,
+               tp.category_id,
+               tp.delete_status
+        from t_carts tc
+                     left join t_product tp on tc.product_id = tp.product_id
+        where tc.delete_status = 0
+          and tc.user_id = #{userId}
+    </select>
+    <insert id="insert">
+        insert into t_carts(product_id, user_id, quantity)
+        values (#{cart.productId}, #{cart.userId}, #{cart.quantity});
+    </insert>
+    <select id="selectByUserIdAndProductId" resultMap="BaseResultMap">
+        select cart_id, product_id, user_id, quantity, delete_status
+        from t_carts
+        where delete_status = 0
+          and user_id = #{userId}
+          and product_id=#{productId}
+    </select>
+    <update id="updateQuantityByCartId">
+        update t_carts
+        set quantity=#{quantity}
+        where delete_status = 0
+          and cart_id = #{cartId};
+    </update>
+    <update id="deleteByCartIds">
+        update t_carts
+        set delete_status = 1 where cart_id in
+        <foreach collection="cartIds" item="cartId" open="(" close=")" separator=",">
+            #{cartId}
+        </foreach>
+    </update>
 </mapper>
