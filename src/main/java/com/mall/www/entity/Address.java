@@ -10,7 +10,7 @@ public class Address {
     private Long addressId;
 
     /**
-     *
+     *用户id
      */
     private Long userId;
 
@@ -40,7 +40,7 @@ public class Address {
     private String fixedPhone;
 
     /**
-     *
+     *邮编
      */
     private String postcode;
 
