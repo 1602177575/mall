@@ -25,6 +25,7 @@ public interface ProductMapper {
      */
     DetailsProductBo selectProductDetails(Long pid);
 
+    Product selectByProductId(@Param("productId") Long productId);
 
     /**
      * 猜你喜欢 展示销量最好的产品

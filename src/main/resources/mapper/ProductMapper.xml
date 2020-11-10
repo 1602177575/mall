@@ -14,7 +14,7 @@
         <result property="productTitle" column="product_title"/>
         <result property="promotionPrice" column="promotion_price"/>
     </resultMap>
-    
+
     <resultMap id="BaseResultDetailsMap" type="com.mall.www.common.bo.DetailsProductBo">
         <id property="productId" column="id"/>
         <result column="pid" property="pid"/>
@@ -30,44 +30,85 @@
 
         <result column="packing" property="packing"/>
         <result column="subject" property="subject"/>
-        <result column="facade" property="facade" />
+        <result column="facade" property="facade"/>
         <result column="system" property="system"/>
         <result column="cpu" property="cpu"/>
         <result column="notwork" property="notwork"/>
         <result column="stockpile" property="stockpile"/>
         <result column="screen" property="screen"/>
-</resultMap>
-    
+    </resultMap>
 
 
-<sql id="product">
-        product_name,product_title,description,pic,album_pics,price
-        ,promotion_price,gift_point,category_id,delete_status
+    <sql id="product">
+        product_name
+                ,product_title
+                ,description
+                ,pic
+                ,album_pics
+                ,price
+                ,promotion_price
+                ,gift_point
+                ,category_id
+                ,delete_status
     </sql>
 
     <sql id="details">
-         id,pid,product_id,product_name,product_title,description,pic,album_pics,price
-        ,promotion_price,gift_point,category_id,
-        packing,subject,facade,system,cpu,notwork,stockpile,screen
+        id,
+        pid,
+        product_id,
+        product_name,
+        product_title,
+        description,
+        pic,
+        album_pics,
+        price
+                ,
+        promotion_price,
+        gift_point,
+        category_id,
+        packing,
+        subject,
+        facade,system,cpu,notwork,stockpile,screen
     </sql>
 
 
-<select id="selectProductByName" resultMap="BaseResultMap">
-select <include refid="product"/>
-from t_product
-where product_name like concat('%',#{pName},'%')
-</select>
+    <select id="selectProductByName" resultMap="BaseResultMap">
+        select
+        <include refid="product"/>
+        from t_product
+        where product_name like concat('%', #{pName}, '%')
+    </select>
 
 
-<select id="selectProductDetails" resultMap="BaseResultDetailsMap">
-select <include refid="details"/> from t_product as p left join  t_details as d on p.product_id=d.pid
-where p.product_id=#{pid}
-</select>
+    <select id="selectProductDetails" resultMap="BaseResultDetailsMap">
+        select
+        <include refid="details"/>
+        from t_product as p left join t_details as d
+        on p.product_id=d.pid
+        where p.product_id=#{pid}
+    </select>
 
 
-<select id="selectLikeTop" resultMap="BaseResultMap">
-select <include refid="product"/>
-from t_product limit 5
-</select>
-
+    <select id="selectLikeTop" resultMap="BaseResultMap">
+        select
+        <include refid="product"/>
+        from t_product
+        limit 5
+    </select>
+    <select id="selectByProductId" resultMap="BaseResultMap">
+        select product_id,
+               product_name,
+               product_title,
+               description,
+               pic,
+               album_pics,
+               price,
+               promotion_price,
+               gift_point,
+               category_id,
+               delete_status
+        from t_product
+        where delete_status = 0
+          and product_id = #{productId}
+    </select>
 </mapper>
