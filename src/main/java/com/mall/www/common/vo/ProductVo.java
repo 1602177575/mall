@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  */
 @Data
 public class ProductVo {
-    private int product_id;//产品ID
+    private Long product_id;//产品ID
     private String productName; //商品名称
     private String pic;      //图片
     private BigDecimal price;   //商品价格

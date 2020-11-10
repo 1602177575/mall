@@ -4,10 +4,45 @@
     <resultMap id="BaseResultMap" type="User">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="address" column="address"/>
-        <result property="isDele" column="is_dele"/>
         <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result  property="sex" column="sex"/>
+        <result property="address" column="address"/>
         <result property="phone" column="phone"/>
-        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="identity" column="identity"/>
+        <result property="is_marital" column="is_marital"/>
+        <result property="member" column="member"/>
+        <result property="income" column="income"/>
+        <result property="is_cart" column="iscart"/>
+
     </resultMap>
+
+<sql id="user">
+    id,name,password,email,sex,address,phone,birthday,identity,,is_marital,
+    member,income,is_cart
+</sql>
+
+<select id="login" resultType="integer">
+select count(*) from user where name=#{name} and password=#{pwd}
+</select>
+
+<insert id="addUser">
+insert into user (name,password,email)
+values (#{user.name},#{user.password},#{user.email})
+</insert>
+
+<update id="upPassword">
+update user set password=#{pwd} where name =#{name}
+</update>
+
+
+<update id="upDateUser">
+update `user`
+set email=#{user.email},sex=#{user.sex},address=#{user.address},phone=#{user.phone},
+birthday=#{user.birthday},identity=#{user.identity},is_marital=#{user.is_marital},
+member=#{user.member},income=#{user.income},is_cart=#{user.is_cart}
+where name=#{user.name}
+</update>
+
 </mapper>

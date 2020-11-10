@@ -1,6 +1,6 @@
 package com.mall.www.controller;
 
-import com.mall.www.common.vo.Details_productVo;
+import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.service.CategoryService;
 
 import javax.annotation.Resource;
@@ -48,7 +48,7 @@ public class HomeController {
      */
     @PostMapping("/Details")
     public Object selectProductDetails(Integer pid){
-        Details_productVo product = productService.selectProductDetails(pid);
+        DetailsProductVo product = productService.selectProductDetails(pid);
         return product;
     }
 
@@ -59,8 +59,8 @@ public class HomeController {
      */
     @PostMapping("/likeTop")
     public List<Object> selectLikeTop(){
-
-        return null;
+        List<Object> list = productService.selectLikeTop();
+        return list;
     }
 
 

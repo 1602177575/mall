@@ -1,10 +1,12 @@
 package com.mall.www.service.impl;
 
-import com.mall.www.common.vo.Details_productVo;
+import com.mall.www.common.bo.DetailsProductBo;
+import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.common.vo.ProductVo;
 import com.mall.www.entity.Product;
 import com.mall.www.mapper.ProductMapper;
 import com.mall.www.service.ProductService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,6 +26,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductVo> list=new ArrayList<>();
         product.forEach(pro->{
             ProductVo vo = new ProductVo();
+            vo.setProduct_id(pro.getProductId());
             vo.setProductName(pro.getProductName());
             vo.setPic(pro.getPic());
             vo.setPrice(pro.getPrice());
@@ -35,18 +38,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Details_productVo selectProductDetails(Integer pid) {
-        Product pro = productMapper.selectProductDetails(pid);
+    public DetailsProductVo selectProductDetails(Long pid) {
+        DetailsProductBo pro = productMapper.selectProductDetails(pid);
 
-        Details_productVo vo = new Details_productVo();
-        vo.setProductName(pro.getProductName());
-        vo.setProductTitle(pro.getProductTitle());
-        vo.setAlbumPics(pro.getAlbumPics());
-        vo.setDescription(pro.getDescription());
-        vo.setPic(pro.getPic());
-        vo.setPrice(pro.getPrice());
-        vo.setPromotionPrice(pro.getPromotionPrice());
-        vo.setCategoryId(pro.getCategoryId());
+        System.out.println(pro.toString());
+
+        DetailsProductVo vo = new DetailsProductVo();
+        //基本信息
+
+        //详情信息
+        BeanUtils.copyProperties(pro,vo);
         return vo;
     }
 

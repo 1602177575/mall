@@ -1,6 +1,6 @@
 package com.mall.www.service;
 
-import com.mall.www.common.vo.Details_productVo;
+import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.common.vo.ProductVo;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public interface ProductService {
      * @param pid 商品的ID
      * @return
      */
-    Details_productVo selectProductDetails(Integer pid);
+    DetailsProductVo selectProductDetails(Long pid);
 
 
     /**

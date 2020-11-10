@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Object> selectCategoryByIdList(Integer pid, Integer curPage, Integer pageSize) {
         List<Object> list=new ArrayList<>();
-        List<Product> products = categoryMapper.selectCategoryList(pid, (curPage - 1) * pageSize, pageSize);
+        List<Product> products = categoryMapper.selectCategoryList(pid, ((curPage - 1) * pageSize), pageSize);
         products.forEach(product->{
             ProductVo cvo = new ProductVo();
             cvo.setProduct_id(product.getProductId());

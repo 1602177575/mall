@@ -3,7 +3,6 @@ package com.mall.www.controller;
 import com.mall.www.common.ResponseEntity;
 import com.mall.www.common.dto.CartsDto;
 import com.mall.www.common.vo.CartsVo;
-import com.mall.www.entity.Carts;
 import com.mall.www.service.CartsService;
 import org.springframework.web.bind.annotation.*;
 

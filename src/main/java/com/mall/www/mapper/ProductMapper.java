@@ -1,5 +1,7 @@
 package com.mall.www.mapper;
 
+import com.mall.www.common.bo.DetailsProductBo;
+import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.entity.Product;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,7 +23,7 @@ public interface ProductMapper {
      * @param pid 产品ID
      * @return
      */
-    Product selectProductDetails(Integer pid);
+    DetailsProductBo selectProductDetails(Long pid);
 
 
     /**

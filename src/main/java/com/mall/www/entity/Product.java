@@ -10,7 +10,7 @@ public class Product {
     /**
      * 主键
      */
-    private int productId;
+    private Long productId;
 
     /**
      * 商品名称

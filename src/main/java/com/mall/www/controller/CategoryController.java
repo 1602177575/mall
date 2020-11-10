@@ -1,9 +1,8 @@
 package com.mall.www.controller;
 
 
-import com.mall.www.common.vo.Details_productVo;
+import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.common.vo.ProductVo;
-import com.mall.www.entity.Product;
 import com.mall.www.service.CategoryService;
 import com.mall.www.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,6 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/category")
-    @ResponseBody
     public List<Object> SelectCategory(@RequestParam(required=true)Integer cid, @RequestParam(defaultValue="1")Integer curPage, @RequestParam(defaultValue="8") Integer pageSize){
         List<Object> categoryVos = categoryService.selectCategoryByIdList(cid, curPage, pageSize);
         return categoryVos;
@@ -41,8 +39,8 @@ public class CategoryController {
      * @return
      */
     @PostMapping("keyName")
-    @ResponseBody
-    public List<ProductVo> selectKeywordName(@RequestParam(required = true)String  name){
+    public List<ProductVo> selectKeywordName(@RequestParam(required = true,value = "name")String  name){
+
         List<ProductVo> list = productService.selectKeyName(name);
         return list;
     }
@@ -55,7 +53,7 @@ public class CategoryController {
      */
     @PostMapping("/Details")
     public Object selectProductDetails(@RequestParam(required = true) Integer pid){
-        Details_productVo product = productService.selectProductDetails(pid);
+        DetailsProductVo product = productService.selectProductDetails(pid);
         return product;
     }
 
