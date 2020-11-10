@@ -2,14 +2,12 @@ package com.mall.www.controller;
 
 
 import com.mall.www.common.ResponseEntity;
-import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.common.vo.ProductVo;
 import com.mall.www.service.CategoryService;
 import com.mall.www.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController

@@ -1,7 +1,6 @@
 package com.mall.www.controller;
 
 import com.mall.www.common.ResponseEntity;
-import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.service.CategoryService;
 
 import javax.annotation.Resource;

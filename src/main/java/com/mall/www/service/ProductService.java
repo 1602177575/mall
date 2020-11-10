@@ -2,6 +2,7 @@ package com.mall.www.service;
 
 import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.common.vo.ProductVo;
+import com.mall.www.entity.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
