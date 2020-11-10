@@ -1,5 +1,6 @@
 package com.mall.www.controller;
 
+import com.mall.www.common.ResponseEntity;
 import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.service.CategoryService;
 
@@ -22,10 +23,9 @@ public class HomeController {
      * @param value 展示标题的数量 默认5个
      * @return
      */
-    @PostMapping("title")
-    public List<String> selectTitle(@RequestParam(defaultValue = "5") Integer value){
-        List<String> title = categoryService.selectCategoryTop(value);
-        return title;
+    @PostMapping("/title")
+    public ResponseEntity<List<String>> selectTitle(@RequestParam(defaultValue = "5") Integer value){
+       return ResponseEntity.success(categoryService.selectCategoryTop(value));
     }
 
     /**
@@ -35,9 +35,8 @@ public class HomeController {
      * @return
      */
     @PostMapping("/pro_top")
-    public List<Object> selectProductTop(Integer cid, @RequestParam(defaultValue = "6") Integer value){
-        List<Object> list = categoryService.selectCategoryTopById(cid, value);
-        return list;
+    public ResponseEntity<List<Object>> selectProductTop(Integer cid, @RequestParam(defaultValue = "6") Integer value){
+        return ResponseEntity.success(categoryService.selectCategoryTopById(cid, value));
     }
 
 
@@ -47,9 +46,8 @@ public class HomeController {
      * @return
      */
     @PostMapping("/Details")
-    public Object selectProductDetails(Integer pid){
-        DetailsProductVo product = productService.selectProductDetails(pid);
-        return product;
+    public ResponseEntity<Object> selectProductDetails(Long pid){
+       return ResponseEntity.success(productService.selectProductDetails(pid));
     }
 
 
@@ -58,9 +56,8 @@ public class HomeController {
      * @return
      */
     @PostMapping("/likeTop")
-    public List<Object> selectLikeTop(){
-        List<Object> list = productService.selectLikeTop();
-        return list;
+    public ResponseEntity<List<Object>> selectLikeTop(){
+        return ResponseEntity.success(productService.selectLikeTop());
     }
 
 

@@ -1,6 +1,7 @@
 package com.mall.www.controller;
 
 
+import com.mall.www.common.ResponseEntity;
 import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.common.vo.ProductVo;
 import com.mall.www.service.CategoryService;
@@ -8,6 +9,7 @@ import com.mall.www.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
@@ -28,9 +30,8 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/category")
-    public List<Object> SelectCategory(@RequestParam(required=true)Integer cid, @RequestParam(defaultValue="1")Integer curPage, @RequestParam(defaultValue="8") Integer pageSize){
-        List<Object> categoryVos = categoryService.selectCategoryByIdList(cid, curPage, pageSize);
-        return categoryVos;
+    public ResponseEntity<List<Object>> SelectCategory(@RequestParam(required=true)Integer cid, @RequestParam(defaultValue="1")Integer curPage, @RequestParam(defaultValue="8") Integer pageSize){
+        return  ResponseEntity.success(categoryService.selectCategoryByIdList(cid, curPage, pageSize));
     }
 
     /**
@@ -38,11 +39,9 @@ public class CategoryController {
      * @param name 商品名字
      * @return
      */
-    @PostMapping("keyName")
-    public List<ProductVo> selectKeywordName(@RequestParam(required = true,value = "name")String  name){
-
-        List<ProductVo> list = productService.selectKeyName(name);
-        return list;
+    @PostMapping("/keyName")
+    public ResponseEntity<List<ProductVo> >selectKeywordName(@RequestParam(required = true,value = "name")String  name){
+      return ResponseEntity.success(productService.selectKeyName(name));
     }
 
 
@@ -52,9 +51,8 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/Details")
-    public Object selectProductDetails(@RequestParam(required = true) Integer pid){
-        DetailsProductVo product = productService.selectProductDetails(pid);
-        return product;
+    public ResponseEntity<Object> selectProductDetails(@RequestParam(required = true) Long pid){
+        return ResponseEntity.success(productService.selectProductDetails(pid));
     }
 
 

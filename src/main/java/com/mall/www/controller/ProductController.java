@@ -1,6 +1,7 @@
 package com.mall.www.controller;
 
 
+import com.mall.www.common.ResponseEntity;
 import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.service.ProductService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +22,9 @@ public class ProductController {
      * @param pid 商品ID
      * @return
      */
-    public DetailsProductVo selectProductDetails(@RequestParam(required = true) Integer pid){
-        DetailsProductVo details = productService.selectProductDetails(pid);
-
-        return details;
+    @RequestMapping("/Details")
+    public ResponseEntity<DetailsProductVo> selectProductDetails(@RequestParam(required = true) Long pid){
+        return ResponseEntity.success(productService.selectProductDetails(pid));
     }
 
 }

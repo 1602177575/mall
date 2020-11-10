@@ -1,5 +1,6 @@
 package com.mall.www.controller;
 
+import com.mall.www.common.ResponseEntity;
 import com.mall.www.entity.User;
 import com.mall.www.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,6 @@ public class UserController {
         return login;
     }
 
-
     /**
      * 用户注册
      * @param name
@@ -36,10 +36,10 @@ public class UserController {
      * @param email
      * @return
      */
-    public Integer register(String name,String password,String email){
+    @PostMapping("/register")
+    public ResponseEntity<Integer> register(@RequestParam(required = true) String name, @RequestParam(required = true) String password, @RequestParam(required = true) String email){
         User user = new User(name,password,email);
-        Integer integer = userService.registerUser(user);
-        return integer;
+       return ResponseEntity.success(userService.registerUser(user));
     }
 
     /**
@@ -47,8 +47,8 @@ public class UserController {
      * @param user
      * @return
      */
-    public Integer upDateUser(User user){
-        Integer integer = userService.upDateUser(user);
-        return integer;
+    @PostMapping("/update")
+    public ResponseEntity<Integer> upDateUser(@RequestParam(required = true) User user){
+       return ResponseEntity.success(userService.upDateUser(user));
     }
 }
