@@ -49,4 +49,46 @@
         where delete_status = 0
           and address_id = #{addressId}
     </select>
+    <insert id="insert" keyProperty="address.userId" useGeneratedKeys="true">
+        insert into t_address(user_id, name, area, detail_address, phone, fixed_phone, postcode, email,
+                              address_alias)
+        values (#{address.userId}, #{address.name}, #{address.area}, #{address.detailAddress}, #{address.phone},
+                #{address.fixedPhone},
+                #{address.postcode}, #{address.email}, #{address.addressAlias});
+    </insert>
+    <update id="update">
+        update t_address
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="address.name != null">
+                name=#{address.name}
+            </if>
+            <if test="address.area != null">
+                ,area=#{address.area}
+            </if>
+            <if test="address.detailAddress != null">
+                ,detail_address=#{address.detailAddress}
+            </if>
+            <if test="address.phone != null">
+                ,phone=#{address.phone}
+            </if>
+            <if test="address.fixedPhone != null">
+                ,fixed_phone=#{address.fixedPhone}
+            </if>
+            <if test="address.postcode != null">
+                ,postcode=#{address.postcode}
+            </if>
+            <if test="address.email != null">
+                ,email=#{address.email}
+            </if>
+            <if test="address.addressAlias != null">
+                ,address_alias=#{address.addressAlias}
+            </if>
+        </trim>
+        where address_id = #{address.addressId};
+    </update>
+    <update id="delete">
+        update t_address
+        set delete_status=1
+        where address_id = #{addressId};
+    </update>
 </mapper>
