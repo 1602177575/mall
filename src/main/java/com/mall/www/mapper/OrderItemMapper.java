@@ -21,4 +21,12 @@ public interface OrderItemMapper {
      * @return
      */
     List<OrderItem> selectListByOrderId(@Param("orderId") Long orderId);
+
+    /**
+     * 根据订单id删除订单详情
+     *
+     * @param orderId
+     * @return
+     */
+    int deleteByOrderId(@Param("orderId") Long orderId);
 }

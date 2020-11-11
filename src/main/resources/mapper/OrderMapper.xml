@@ -20,6 +20,10 @@
         <result property="userId" column="user_id"/>
         <result property="couponId" column="coupon_id"/>
     </resultMap>
+
+    <resultMap id="OrderBoResultMap" type="com.mall.www.common.bo.OrderBo" extends="BaseResultMap">
+        <collection property="orderItemList" resultMap="com.mall.www.mapper.OrderItemMapper.BaseResultMap"/>
+    </resultMap>
     <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
         insert into t_order(order_number, user_id, payment_type, total_money,
                             name, area, detail_address, phone, fixed_phone, postcode, coupon_id)
@@ -48,5 +52,88 @@
         from t_order
         where delete_status = 0
           and order_id = #{orderId}
+    </select>
+    <update id="updatePaymentStatusByOrderId">
+        update t_order
+        set payment_status =#{status}
+        where order_id = #{orderId}
+    </update>
+    <update id="updateOrderStatusByOrderId">
+        update t_order
+        set order_status =#{status}
+        where order_id = #{orderId}
+    </update>
+    <select id="selectListByUserId" resultMap="OrderBoResultMap">
+        select o.order_id,
+               o.order_number,
+               o.user_id,
+               o.payment_status,
+               o.payment_type,
+               o.total_money,
+               o.create_time,
+               o.name,
+               o.area,
+               o.detail_address,
+               o.phone,
+               o.fixed_phone,
+               o.postcode,
+               o.order_status,
+               o.coupon_id,
+               o.gift_point,
+               o.delete_status,
+               oi.order_item_id,
+               oi.order_id,
+               oi.order_number,
+               oi.product_id,
+               oi.product_pic,
+               oi.product_name,
+               oi.product_price,
+               oi.product_quantity,
+               oi.delivery_type,
+               oi.tracking_number,
+               oi.delete_status
+        from t_order o
+                     left join t_order_item oi on o.order_id = oi.order_id
+        where o.delete_status = 0
+          and o.user_id = #{userId}
+    </select>
+    <update id="deleteByOrderId">
+        update t_order
+        set delete_status=1
+        where order_id = #{orderId};
+    </update>
+    <select id="selectOrderBoByOrderId" resultMap="OrderBoResultMap">
+        select o.order_id,
+               o.order_number,
+               o.user_id,
+               o.payment_status,
+               o.payment_type,
+               o.total_money,
+               o.create_time,
+               o.name,
+               o.area,
+               o.detail_address,
+               o.phone,
+               o.fixed_phone,
+               o.postcode,
+               o.order_status,
+               o.coupon_id,
+               o.gift_point,
+               o.delete_status,
+               oi.order_item_id,
+               oi.order_id,
+               oi.order_number,
+               oi.product_id,
+               oi.product_pic,
+               oi.product_name,
+               oi.product_price,
+               oi.product_quantity,
+               oi.delivery_type,
+               oi.tracking_number,
+               oi.delete_status
+        from t_order o
+                     left join t_order_item oi on o.order_id = oi.order_id
+        where o.delete_status = 0
+          and o.order_id = #{orderId};
     </select>
 </mapper>

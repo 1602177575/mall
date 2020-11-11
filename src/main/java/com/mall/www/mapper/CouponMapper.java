@@ -23,8 +23,17 @@ public interface CouponMapper {
 
     /**
      * 根据优惠卷id删除优惠卷信息
+     *
      * @param couponId
      * @return
      */
     int deleteByCouponId(@Param("couponId") Long couponId);
+
+    /**
+     * 查询所有优惠卷包括已使用、可用、已过期的
+     *
+     * @param userId
+     * @return
+     */
+    List<Coupon> selectList(@Param("userId") Long userId);
 }

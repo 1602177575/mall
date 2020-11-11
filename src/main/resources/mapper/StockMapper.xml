@@ -18,4 +18,16 @@
             #{productId}
         </foreach>
     </select>
+    <select id="selectByProductId" resultMap="BaseResultMap">
+        select stock_id, product_id, total, reservation, update_time, delete_status
+        from t_stock
+        where delete_status = 0
+          and product_id = #{productId}
+    </select>
+    <update id="updateTotalByProductId">
+        update t_stock
+        set update_time=now(),
+            total=#{total}
+        where product_id = #{productId}
+    </update>
 </mapper>

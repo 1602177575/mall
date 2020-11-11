@@ -1,7 +1,7 @@
 package com.mall.www.service.impl;
 
 import com.mall.www.common.StatusCode;
-import com.mall.www.common.bo.DetailsProductBo;
+import com.mall.www.common.bo.OrderBo;
 import com.mall.www.common.dto.CartsDto;
 import com.mall.www.common.dto.OrderDto;
 import com.mall.www.common.dto.OrderItemDto;
@@ -13,21 +13,21 @@ import com.mall.www.exception.ServiceException;
 import com.mall.www.mapper.*;
 import com.mall.www.service.CartsService;
 import com.mall.www.service.OrderService;
+import com.mall.www.service.StockService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.rmi.server.ServerCloneException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+    public static final int ZERO = 0;
+    public static final int ONE = 1;
+    public static final int TOW = 2;
+    public static final int THREE = 3;
     //地址表
     @Resource
     AddressMapper addressMapper;
@@ -52,9 +52,17 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     OrderItemMapper orderItemMapper;
 
+    //出库表
+    @Resource
+    StockOutMapper stockOutMapper;
+
     //购物车Service
     @Resource
     CartsService cartsService;
+
+    //库存Servic
+    @Resource
+    StockService stockService;
 
     /**
      * 订单准备工作
@@ -221,7 +229,7 @@ public class OrderServiceImpl implements OrderService {
                 CartsDto cartsDto = new CartsDto();
                 cartsDto.setUserId(orderDto.getUserId());
                 cartsDto.setProductId(orderItemDto.getProductId());
-                cartsDto.setQuantity(0 - orderItemDto.getProductQuantity());
+                cartsDto.setQuantity(ZERO - orderItemDto.getProductQuantity());
                 cartsService.updateProductQuantity(cartsDto);
             }
             //设置Vo对象
@@ -229,6 +237,144 @@ public class OrderServiceImpl implements OrderService {
             orderVo.setCouponId(coupon.getCouponId());
             List<OrderItem> orderItems = orderItemMapper.selectListByOrderId(orderId);
             List<OrderItemVo> orderItemVos = ColaBeanUtils.copyListProperties(orderItems, OrderItemVo::new);
+            orderVo.setProductList(orderItemVos);
+        } catch (Exception e) {
+            throw new ServiceException(StatusCode.SERVER_ERROR);
+        } finally {
+            return orderVo;
+        }
+    }
+
+    /**
+     * 支付成功后根据订单id修改订单的状态
+     * 修改支付的状态
+     * 修改订单的状态
+     * 修改库存
+     * 保存出库记录
+     * 设置vo对象中的值
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    @Transactional
+    @Override
+    public OrderVo updatePaymentStatus(Long orderId) {
+        OrderVo orderVo = new OrderVo();
+        try {
+            //根据订单id获取订单信息
+            Order order = orderMapper.selectByOrderId(orderId);
+            //根据订单id获取订单详情信息
+            List<OrderItem> orderItems = orderItemMapper.selectListByOrderId(orderId);
+            //获取商品id集合
+            List<Long> productIds = new ArrayList<>();
+            orderItems.forEach(orderItem -> {
+                productIds.add(orderItem.getProductId());
+            });
+            //根据商品id集合获取库存信息
+            List<Stock> stocks = stockMapper.selectByProductIds(productIds);
+            List<OrderItemDto> orderItemDtos = ColaBeanUtils.copyListProperties(orderItems, OrderItemDto::new);
+
+            //判断库存是否不足
+            if (stocks == null || stocks.size() != orderItems.size() || checkUnderstock(orderItemDtos, stocks)) {
+                throw new ServiceException(StatusCode.SERVER_ERROR);
+            }
+
+            //修改订单的状态
+            orderMapper.updatePaymentStatusByOrderId(orderId, ONE);
+            orderMapper.updateOrderStatusByOrderId(orderId, ONE);
+
+            //修改库存
+            orderItems.forEach(orderItem -> {
+                stockService.updateStock(orderItem.getProductId(), ZERO - orderItem.getProductQuantity());
+            });
+            //记录出库
+            orderItems.forEach(orderItem -> {
+                StockOut stockOut = new StockOut();
+                stockOut.setOrderId(orderItem.getOrderId());
+                stockOut.setProductId(orderItem.getProductId());
+                stockOut.setQuantity(orderItem.getProductQuantity());
+                stockOutMapper.insert(stockOut);
+            });
+            //设置vo对象的值
+            BeanUtils.copyProperties(order, orderVo);
+            List<OrderItemVo> orderItemVos = ColaBeanUtils.copyListProperties(orderItems, OrderItemVo::new);
+            orderVo.setProductList(orderItemVos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return orderVo;
+        }
+    }
+
+    /**
+     * 根据用户id查询订单列表信息
+     *
+     * @param userId 用户id
+     * @return
+     */
+    @Override
+    public List<OrderVo> list(Long userId) {
+        List<OrderVo> orderVos = new ArrayList<>();
+        try {
+            //一对多查询
+            //根据用户id查询订单信息和订单详情信息
+            List<OrderBo> orderBos = orderMapper.selectListByUserId(userId);
+            orderBos.forEach(orderBo -> {
+                OrderVo orderVo = new OrderVo();
+                BeanUtils.copyProperties(orderBo, orderVo);
+                List<OrderItemVo> orderItemVos = ColaBeanUtils.copyListProperties(orderBo.getOrderItemList(), OrderItemVo::new);
+                orderVo.setProductList(orderItemVos);
+                orderVos.add(orderVo);
+            });
+        } catch (Exception e) {
+            throw new ServiceException(StatusCode.SERVER_ERROR);
+        } finally {
+            return orderVos;
+        }
+    }
+
+    /**
+     * 根据订单id删订单
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    @Transactional
+    @Override
+    public boolean delete(Long orderId) {
+        boolean flag = false;
+        try {
+            //根据订单id删除订单表的信息
+            int i = orderMapper.deleteByOrderId(orderId);
+            if (i <= 0) {
+                throw new ServiceException(StatusCode.SERVER_ERROR);
+            }
+            //根据订单id删除订单详情表的信息
+            i = orderItemMapper.deleteByOrderId(orderId);
+            if (i <= 0) {
+                throw new ServiceException(StatusCode.SERVER_ERROR);
+            }
+            flag = true;
+        } catch (Exception e) {
+            throw new ServiceException(StatusCode.SERVER_ERROR);
+        } finally {
+            return flag;
+        }
+    }
+
+    /**
+     * 根据订单id查询订单详情信息
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    @Override
+    public OrderVo getOrder(Long orderId) {
+        OrderVo orderVo = new OrderVo();
+        try {
+            OrderBo orderBo = orderMapper.selectOrderBoByOrderId(orderId);
+            BeanUtils.copyProperties(orderBo, orderVo);
+            List<OrderItemVo> orderItemVos = ColaBeanUtils.copyListProperties(orderBo.getOrderItemList(), OrderItemVo::new);
             orderVo.setProductList(orderItemVos);
         } catch (Exception e) {
             throw new ServiceException(StatusCode.SERVER_ERROR);
