@@ -8,6 +8,8 @@ import java.util.List;
 
 @Data
 public class OrderVo {
+    //订单id
+    private Long orderId;
 
     //订单编号
     private String orderNumber;
