@@ -37,4 +37,9 @@
         where delete_status = 0
           and order_id = #{orderId}
     </select>
+    <update id="deleteByOrderId">
+        update t_order_item
+        set delete_status=1
+        where order_id = #{orderId};
+    </update>
 </mapper>
