@@ -25,7 +25,7 @@ public interface CategoryService {
      * @param value 展示前几个分类
      * @return
      */
-     List<String> selectCategoryTop(Integer value);
+     List<String> selectCategoryTopTile(Integer value);
 
 
     /**

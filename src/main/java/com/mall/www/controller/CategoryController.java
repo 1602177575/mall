@@ -27,8 +27,8 @@ public class CategoryController {
      * @param cid 必传 类别ID
      * @return
      */
-    @PostMapping("/category")
-    public ResponseEntity<List<Object>> SelectCategory(@RequestParam(required=true)Integer cid, @RequestParam(defaultValue="1")Integer curPage, @RequestParam(defaultValue="8") Integer pageSize){
+    @RequestMapping("/category/{id}/{p}")
+    public ResponseEntity<List<Object>> SelectCategory(@PathVariable("id") Integer cid,@PathVariable("p") @RequestParam(defaultValue = "1" ) Integer curPage, @RequestParam(defaultValue="8") Integer pageSize){
         return  ResponseEntity.success(categoryService.selectCategoryByIdList(cid, curPage, pageSize));
     }
 

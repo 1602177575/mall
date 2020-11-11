@@ -3,6 +3,8 @@ package com.mall.www.common;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class ResponseEntity<T> {
@@ -13,6 +15,7 @@ public class ResponseEntity<T> {
     //数据
     private T data;
 
+
     public static <T> ResponseEntity<T> success(T data) {
         return ResponseEntity.<T>builder()
                 .status(StatusCode.SUCCESS.getStatus())
@@ -20,6 +23,7 @@ public class ResponseEntity<T> {
                 .data(data)
                 .build();
     }
+
 
     public static <T> ResponseEntity<T> success(StatusCode statusCode, T data) {
         return ResponseEntity.<T>builder()
@@ -42,4 +46,6 @@ public class ResponseEntity<T> {
                 .message(statusCode.getMessage())
                 .build();
     }
+
+
 }
