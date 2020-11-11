@@ -45,4 +45,15 @@ public class OrderController {
     public ResponseEntity create(@RequestBody OrderDto orderDto) {
         return ResponseEntity.success(orderService.create(orderDto));
     }
+
+    /**
+     * 支付成功后根据订单id修改订单的状态
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    @PostMapping("/successful")
+    public ResponseEntity paymentSuccessful(@RequestParam Long orderId) {
+        return ResponseEntity.success(orderService.updatePaymentStatus(orderId));
+    }
 }
