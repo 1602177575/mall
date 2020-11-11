@@ -111,7 +111,7 @@
         where delete_status = 0
           and product_id = #{productId}
     </select>
-    <select id="selectListByProductIds" resultType="com.mall.www.entity.Product">
+    <select id="selectListByProductIds" resultMap="BaseResultMap">
         select product_id,
                product_name,
                product_title,

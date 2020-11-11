@@ -20,7 +20,7 @@
         <result property="userId" column="user_id"/>
         <result property="couponId" column="coupon_id"/>
     </resultMap>
-    <insert id="insert" useGeneratedKeys="true" keyColumn="orderId">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
         insert into t_order(order_number, user_id, payment_type, total_money,
                             name, area, detail_address, phone, fixed_phone, postcode, coupon_id)
         values (#{order.orderNumber}, #{order.userId}, #{order.paymentType}, #{order.totalMoney}, #{order.name},

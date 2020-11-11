@@ -61,7 +61,7 @@ public class CartsServiceImpl implements CartsService {
             //根据用户id和商品id查询购物车信息
             Carts carts = cartsMapper.selectByUserIdAndProductId(cartsDto.getUserId(), cartsDto.getProductId());
             //判断是购物车信息是否为空
-            if (carts == null) {
+            if (carts == null && cartsDto.getQuantity() > 0) {
                 //如果购物车信息为空,表示购物车信息不存在，则添加购物信息
                 //添加购物车信息
                 Carts temp = new Carts();
