@@ -13,8 +13,11 @@ import javax.annotation.Resource;
  * 订单
  * <p>
  * 订单准备     结算页面
- * 需要用户id (查地址，优惠卷)
- * 需要商品：id、商品数量、单价、数量,名称（不用购物车id，是考虑用户不加入购物车直接购买）
+ * 创建订单     点击提交订单
+ * 支付成功之后
+ * 查询用户的订单
+ * 删除订单
+ * 查看订单详情
  */
 @RestController
 @RequestMapping("/order")
@@ -55,5 +58,38 @@ public class OrderController {
     @PostMapping("/successful")
     public ResponseEntity paymentSuccessful(@RequestParam Long orderId) {
         return ResponseEntity.success(orderService.updatePaymentStatus(orderId));
+    }
+
+    /**
+     * 根据用户id查询订单列表信息
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/list")
+    public ResponseEntity list(Long userId) {
+        return ResponseEntity.success(orderService.list(userId));
+    }
+
+    /**
+     * 根据订单id删除订单信息
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    @PostMapping("/delete")
+    public ResponseEntity delete(Long orderId) {
+        return ResponseEntity.success(orderService.delete(orderId));
+    }
+
+    /**
+     * 根据订单id查订单信息
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    @GetMapping("/get")
+    public ResponseEntity get(Long orderId) {
+        return ResponseEntity.success(orderService.getOrder(orderId));
     }
 }
