@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.www.mapper.UserCommentsMapper">
+<resultMap id="BaseResultMap" type="UserComments">
+    <id property="id" column="id"/>
+    <result property="uid" column="uid"/>
+    <result property="pid" column="pid"/>
+    <result property="evaluate" column="evaluate"/>
+    <result property="answer" column="answer"/>
+    <result property="content" column="content"/>
+    <result property="commentsTime" column="comments_Time"/>
+</resultMap>
+    <sql id="userComments">
+    id,uid,pid,evaluate,answer,content,comments_Time
+</sql>
+
+<select id="selectUserCommentsByPro" resultMap="BaseResultMap">
+select <include refid="userComments"/> from t_user_comments where pid=#{pid}
+</select>
+
+<select id="selectUserCommentsByUser" resultMap="BaseResultMap">
+select <include refid="userComments"/> from t_user_comments where uid=#{uid}
+</select>
+
+<insert id="insertUserComments">
+insert into t_user_comments
+ (uid, pid, evaluate, content, answer, comments_time)
+VALUES(#{uc.uid},#{uc.pid},#{uc.evaluate},#{uc.content},#{uc.answer},#{uc.commentsTime})
+</insert>
+
+</mapper>

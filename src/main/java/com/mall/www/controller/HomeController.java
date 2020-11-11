@@ -1,63 +1,48 @@
 package com.mall.www.controller;
 
 import com.mall.www.common.ResponseEntity;
+import com.mall.www.common.vo.HomeVo;
+import com.mall.www.common.vo.ProductVo;
 import com.mall.www.service.CategoryService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.mall.www.service.HomeService;
 import com.mall.www.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/home")
 public class HomeController {
+
     @Resource
-    CategoryService categoryService;
+    HomeService homeService;
     @Resource
     ProductService productService;
 
     /**
-     * 展示分类标题
-     * @param value 展示标题的数量 默认5个
+     * 展示主页数据
+     * @param tile 展示前几条标题
+     * @param product 前三分类 各多少个产品数据
      * @return
      */
-    @PostMapping("/title")
-    public ResponseEntity<List<String>> selectTitle(@RequestParam(defaultValue = "5") Integer value){
-       return ResponseEntity.success(categoryService.selectCategoryTop(value));
-    }
-
-    /**
-     * 主页展示各类商品的推荐产品
-     * @param cid 产品分类
-     * @param value 产品数量 默认6个
-     * @return
-     */
-    @PostMapping("/pro_top")
-    public ResponseEntity<List<Object>> selectProductTop(Integer cid, @RequestParam(defaultValue = "6") Integer value){
-        return ResponseEntity.success(categoryService.selectCategoryTopById(cid, value));
+    @PostMapping("/index")
+    public ResponseEntity<HomeVo> index(@RequestParam(defaultValue = "5") Integer tile,@RequestParam(defaultValue = "6") Integer product){
+        HomeVo homeVo = homeService.selectHome(tile, product);
+        return ResponseEntity.success(homeVo);
     }
 
 
     /**
-     * 根据其商品的ID 查询其商品详情信息
-     * @param pid
+     * 模糊查询其商品名字
+     * @param name 商品名字
      * @return
      */
-    @PostMapping("/Details")
-    public ResponseEntity<Object> selectProductDetails(Long pid){
-       return ResponseEntity.success(productService.selectProductDetails(pid));
+    @PostMapping("/search")
+    public ResponseEntity<List<ProductVo> >selectKeywordName(@RequestParam(required = true,value = "name")String  name){
+        return ResponseEntity.success(productService.selectKeyName(name));
     }
-
-
-    /**
-     * 猜你喜欢 展示销量最多的几款产品
-     * @return
-     */
-    @PostMapping("/likeTop")
-    public ResponseEntity<List<Object>> selectLikeTop(){
-        return ResponseEntity.success(productService.selectLikeTop());
-    }
-
 
 }

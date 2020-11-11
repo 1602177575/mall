@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<String> selectCategoryTop(Integer value) {
+    public List<String> selectCategoryTopTile(Integer value) {
         List<String> topCategoryName=null;
         try {
             topCategoryName = categoryMapper.selectCategoryTopName(value);

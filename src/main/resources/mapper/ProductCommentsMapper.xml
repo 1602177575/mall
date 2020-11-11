@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.www.mapper.ProductCommentsMapper">
+<resultMap id="BaseResultMap" type="ProductComments">
+    <id column="id" property="id"/>
+    <result property="pid" column="pid"/>
+    <result property="uid" column="uid"/>
+    <result property="answer" column="answer"/>
+    <result property="commentsTime" column="commentsTime"/>
+    <result property="issue" column="issue"/>
+</resultMap>
+<sql id="productComments">
+ id,pid,uid,answer,commentsTime,issue
+</sql>
+
+<select id="selectProductCommentsByPro" resultMap="BaseResultMap">
+select <include refid="productComments"/> from t_product_comments where pid=#{pid}
+</select>
+
+<insert id="insertProductComments">
+insert into  t_product_comments (pid, uid, issue, answer, comments_time)
+values (#{pc.pid},#{pc.uid},#{pc.issue},#{pc.answer},#{pc.commentsTime})
+</insert>
+
+<update id="updateAnswer">
+update t_product_comments set answer=#{as} where id=#{mid}
+</update>
+
+</mapper>
