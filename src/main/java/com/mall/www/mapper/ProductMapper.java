@@ -27,6 +27,8 @@ public interface ProductMapper {
 
     Product selectByProductId(@Param("productId") Long productId);
 
+    List<Product> selectListByProductIds(@Param("productIds") List<Long> productIds);
+
     /**
      * 猜你喜欢 展示销量最好的产品
      * @return
