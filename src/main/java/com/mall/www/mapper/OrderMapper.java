@@ -1,8 +1,10 @@
 package com.mall.www.mapper;
 
+import com.mall.www.common.bo.OrderBo;
 import com.mall.www.entity.Order;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 public interface OrderMapper {
     /**
@@ -38,4 +40,30 @@ public interface OrderMapper {
      * @return
      */
     int updateOrderStatusByOrderId(@Param("orderId") Long orderId, @Param("status") Integer orderStatus);
+
+    /**
+     * 根据用户id查订单信息  订单表 订单详情表
+     * 一对多
+     *
+     * @param userId
+     * @return
+     */
+    List<OrderBo> selectListByUserId(@Param("userId") Long userId);
+
+    /**
+     * 根据订单id删订单
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    int deleteByOrderId(@Param("orderId") Long orderId);
+
+    /**
+     * 根据订单id查询订单信息 订单表 订单详情表
+     * 一对多
+     *
+     * @param orderId
+     * @return
+     */
+    OrderBo selectOrderBoByOrderId(@Param("orderId") Long orderId);
 }
