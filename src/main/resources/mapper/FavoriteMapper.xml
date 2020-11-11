@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.www.mapper.FavoriteMapper">
+    <resultMap id="BaseResultMap" type="Favorite">
+    <id property="id" column="id"/>
+    <result property="uid" column="uid"/>
+    <result property="pid" column="pid"/>
+    <result property="isStatus" column="is_Status"/>
+</resultMap>
+
+   <resultMap id="FavoriteResultMap" type="com.mall.www.common.bo.FavoriteBo" extends="BaseResultMap">
+        <association property="product" javaType="com.mall.www.entity.Product"
+                     resultMap="com.mall.www.mapper.ProductMapper.BaseResultMap"/>
+    </resultMap>
+
+
+<sql id="collection">
+    f.id,f.pid,f.uid,f.is_status,
+           tp.product_id,
+               tp.product_name,
+               tp.product_title,
+               tp.description,
+               tp.pic,
+               tp.album_pics,
+               tp.price,
+               tp.promotion_price,
+               tp.gift_point,
+               tp.category_id,
+               tp.delete_status
+</sql>
+
+
+<select id="selectFavoriteByUid" resultMap="FavoriteResultMap" >
+select <include refid="collection"/> from t_favorite AS f LEFT JOIN t_product as tp
+on f.pid=tp.product_id where f.uid=#{uid} and f.is_status=0
+</select>
+
+<insert id="insertFavorite">
+insert into t_favorite (uid, pid) VALUES (#{uid},#{pid})
+</insert>
+
+<update id="deleteFavorite">
+update t_favorite
+set is_status=1
+where id in
+<foreach collection="tid" item="id" open="(" close=")" separator=",">
+    #{id}
+</foreach>
+</update>
+
+</mapper>
