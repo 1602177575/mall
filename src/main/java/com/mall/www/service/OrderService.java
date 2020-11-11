@@ -4,6 +4,8 @@ import com.mall.www.common.dto.OrderDto;
 import com.mall.www.common.vo.OrderPrepareVo;
 import com.mall.www.common.vo.OrderVo;
 
+import java.util.List;
+
 public interface OrderService {
     /**
      * 订单准备工作
@@ -45,4 +47,28 @@ public interface OrderService {
      * @return
      */
     OrderVo updatePaymentStatus(Long orderId);
+
+    /**
+     * 根据用户id查询订单列表信息
+     *
+     * @param userId 用户id
+     * @return
+     */
+    List<OrderVo> list(Long userId);
+
+    /**
+     * 根据订单id删订单
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    boolean delete(Long orderId);
+
+    /**
+     * 根据订单id查询订单详情信息
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    OrderVo getOrder(Long orderId);
 }
