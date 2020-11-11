@@ -248,7 +248,7 @@ public class OrderServiceImpl implements OrderService {
         for (OrderItemDto orderItemDto : orderItemDtos) {
             for (Product product : products) {
                 if (orderItemDto.getProductId() == product.getProductId()) {
-                    if (orderItemDto.getProductPrice() != product.getPromotionPrice())
+                    if (orderItemDto.getProductPrice().compareTo(product.getPromotionPrice()) != 0)
                         return true;
                 }
             }
@@ -286,7 +286,7 @@ public class OrderServiceImpl implements OrderService {
         long time = new Date().getTime();
         long beginTime = coupon.getBeginTime().getTime();
         long invalidTimme = coupon.getInvalidTimme().getTime();
-        if (beginTime < time || time > invalidTimme) {
+        if (time < beginTime || time > invalidTimme) {
             return true;
         } else {
             return false;
