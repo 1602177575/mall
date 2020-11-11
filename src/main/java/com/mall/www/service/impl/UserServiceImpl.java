@@ -52,10 +52,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer upPassword(String name, String password) {
+    public Integer upPassword(String name, String password,String newPwd) {
         Integer integer=null;
         try {
-            integer = userMapper.upPassword(name, password);
+            integer = userMapper.upPassword(name, password,newPwd);
         }catch (Exception e){
             throw new ServiceException(StatusCode.SYS_ERROR);
         }finally {

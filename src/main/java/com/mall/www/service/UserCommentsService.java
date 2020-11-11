@@ -1,5 +1,6 @@
 package com.mall.www.service;
 
+import com.mall.www.common.dto.UserCommentsDto;
 import com.mall.www.common.vo.UserCommentsVo;
 import com.mall.www.entity.UserComments;
 import org.apache.ibatis.annotations.Param;
@@ -29,6 +30,6 @@ public interface UserCommentsService {
      * @param userComments
      * @return
      */
-    Integer insertUserComments(UserComments userComments);
+    Integer insertUserComments(UserCommentsDto userCommentsDto);
 
 }

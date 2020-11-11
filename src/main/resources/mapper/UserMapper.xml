@@ -33,16 +33,16 @@ values (#{user.name},#{user.password},#{user.email})
 </insert>
 
 <update id="upPassword">
-update user set password=#{pwd} where name =#{name}
+update user set password=#{newPwd} where name =#{name} AND password=#{pwd}
 </update>
 
 
 <update id="upDateUser">
-update `user`
-set email=#{user.email},sex=#{user.sex},address=#{user.address},phone=#{user.phone},
-birthday=#{user.birthday},identity=#{user.identity},is_marital=#{user.is_marital},
-member=#{user.member},income=#{user.income},is_cart=#{user.is_cart}
-where name=#{user.name}
+update user
+set email=#{upUser.email},sex=#{upUser.sex},address=#{upUser.address},phone=#{upUser.phone},
+birthday=#{upUser.birthday},identity=#{upUser.identity},is_marital=#{upUser.is_marital},
+member=#{upUser.member},income=#{upUser.income},is_cart=#{upUser.is_cart}
+where name=#{upUser.name}
 </update>
 
 </mapper>

@@ -24,16 +24,17 @@ public interface UserMapper {
 
     /**
      * 修改密码
-     * @param name
-     * @param password
+     * @param name 账号
+     * @param password 旧密码
+     * @param newPwd 新密码
      * @return
      */
-    Integer upPassword(@Param("name") String name,@Param("pwd") String password);
+    Integer upPassword(@Param("name") String name,@Param("pwd") String password,@Param("newPwd") String newPwd);
 
     /**
      * 修改用户信息
      * @param user
      * @return
      */
-    Integer upDateUser(@Param("user")User user);
+    Integer upDateUser(@Param("upUser")User user);
 }

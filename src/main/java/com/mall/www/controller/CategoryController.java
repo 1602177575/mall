@@ -37,7 +37,7 @@ public class CategoryController {
      * @param name 商品名字
      * @return
      */
-    @PostMapping("/keyName")
+    @PostMapping("/key")
     public ResponseEntity<List<ProductVo> >selectKeywordName(@RequestParam(required = true,value = "name")String  name){
       return ResponseEntity.success(productService.selectKeyName(name));
     }
@@ -48,7 +48,7 @@ public class CategoryController {
      * @param pid
      * @return
      */
-    @PostMapping("/Details")
+    @PostMapping("/details")
     public ResponseEntity<Object> selectProductDetails(@RequestParam(required = true) Long pid){
         return ResponseEntity.success(productService.selectProductDetails(pid));
     }

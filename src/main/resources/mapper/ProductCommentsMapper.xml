@@ -19,6 +19,12 @@
 select <include refid="productComments"/> from t_product_comments where pid=#{pid}
 </select>
 
+
+<select id="selectProductCommentsByUid" resultMap="BaseResultMap">
+select <include refid="productComments"/> from t_product_comments where uid=#{uid}
+</select>
+
+
 <insert id="insertProductComments">
 insert into  t_product_comments (pid, uid, issue, answer, comments_time)
 values (#{pc.pid},#{pc.uid},#{pc.issue},#{pc.answer},#{pc.commentsTime})
@@ -27,5 +33,6 @@ values (#{pc.pid},#{pc.uid},#{pc.issue},#{pc.answer},#{pc.commentsTime})
 <update id="updateAnswer">
 update t_product_comments set answer=#{as} where id=#{mid}
 </update>
+
 
 </mapper>

@@ -17,6 +17,14 @@ public interface ProductCommentsMapper {
 
 
     /**
+     * 根据用户ID查询 商品咨询表
+     * @param uid
+     * @return
+     */
+    List<ProductComments> selectProductCommentsByUid(@Param("uid") Integer uid);
+
+
+    /**
      * 新增对商品的咨询 用户提问
      * @param productComments
      * @return

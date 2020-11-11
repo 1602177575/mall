@@ -2,6 +2,8 @@ package com.mall.www.controller;
 
 
 import com.mall.www.common.ResponseEntity;
+import com.mall.www.common.dto.ProductCommentsDto;
+import com.mall.www.common.dto.UserCommentsDto;
 import com.mall.www.common.vo.DetailsProductVo;
 import com.mall.www.common.vo.ProductCommentsVo;
 import com.mall.www.common.vo.UserCommentsVo;
@@ -39,7 +41,7 @@ public class ProductController {
      * @param uid
      * @return
      */
-    @PostMapping("/UserComments")
+    @PostMapping("/userComments")
     public ResponseEntity<List<UserCommentsVo>> selectUserCommentsByPid(Integer uid){
         return ResponseEntity.success(userCommentsService.selectUserCommentsByUser(uid));
     }
@@ -49,9 +51,34 @@ public class ProductController {
      * @param pid
      * @return
      */
-    @PostMapping("/ProductComments")
+    @PostMapping("/productComments")
     public ResponseEntity<List<ProductCommentsVo>> selectProCommentsByPid(Long pid){
         return ResponseEntity.success(productCommentsService.selectProductCommentsByPro(pid));
     }
+
+
+    /**
+     * 根据用户ID 和商品ID 咨询内容
+     * 创建商品咨询
+     * @param productCommentsDto
+     * @return
+     */
+    @PostMapping("/proComments")
+    public ResponseEntity<Integer> insertProComments(ProductCommentsDto productCommentsDto){
+        return ResponseEntity.success(productCommentsService.insertProductComments(productCommentsDto));
+    }
+
+
+    /**
+     * 根据用户ID 和商品ID 评价内容
+     * 创建用户对商品的评价
+     * @param userCommentsDto
+     * @return
+     */
+    @PostMapping("/userComments")
+    public ResponseEntity<Integer> insertUserComments(UserCommentsDto userCommentsDto){
+        return ResponseEntity.success(userCommentsService.insertUserComments(userCommentsDto));
+    }
+
 
 }

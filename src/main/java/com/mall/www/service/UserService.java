@@ -31,8 +31,14 @@ public interface UserService {
     Integer deleteUser(Integer uid);
 
 
-
-    Integer upPassword(String name,String password);
+    /**
+     * 修改密码
+     * @param name 账号
+     * @param password 旧密码
+     * @param newPwd 新密码
+     * @return
+     */
+    Integer upPassword(String name,String password,String newPwd);
 
     /**
      * 修改用户信息
@@ -40,5 +46,6 @@ public interface UserService {
      * @return
      */
     Integer upDateUser(User user);
+
 
 }
