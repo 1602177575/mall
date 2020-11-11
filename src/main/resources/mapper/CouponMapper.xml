@@ -57,4 +57,21 @@
             delete_status=1
         where coupon_id = #{couponId}
     </update>
+    <select id="selectList" resultMap="BaseResultMap">
+        select coupon_id,
+               user_id,
+               value,
+               minimum,
+               creator_id,
+               product_id,
+               create_time,
+               begin_time,
+               invalid_timme,
+               type,
+               status,
+               delete_status
+        from t_coupon
+        where delete_status = 0
+          and user_id = #{userId};
+    </select>
 </mapper>
