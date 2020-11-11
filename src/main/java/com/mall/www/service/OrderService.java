@@ -33,4 +33,16 @@ public interface OrderService {
      * @return
      */
     OrderVo create(OrderDto orderDto);
+
+    /**
+     * 支付成功后根据订单id修改订单的状态
+     * 修改支付的状态
+     * 修改订单的状态
+     * 修改库存
+     * 保存出库记录
+     *
+     * @param orderId 订单id
+     * @return
+     */
+    OrderVo updatePaymentStatus(Long orderId);
 }
