@@ -49,4 +49,14 @@
         where delete_status = 0
           and order_id = #{orderId}
     </select>
+    <update id="updatePaymentStatusByOrderId">
+        update t_order
+        set payment_status =#{status}
+        where order_id = #{orderId}
+    </update>
+    <update id="updateOrderStatusByOrderId">
+        update t_order
+        set order_status =#{status}
+        where order_id = #{orderId}
+    </update>
 </mapper>
