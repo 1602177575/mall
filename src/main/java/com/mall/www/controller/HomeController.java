@@ -13,6 +13,10 @@ import com.mall.www.service.HomeService;
 import com.mall.www.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 展示主页数据
+ *
+ */
 @RestController
 @RequestMapping("/home")
 public class HomeController {

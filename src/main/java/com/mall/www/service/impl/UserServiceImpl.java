@@ -21,8 +21,10 @@ public class UserServiceImpl implements UserService {
         boolean save =false;
         try {
             Integer login = userMapper.login(name, password);
-            if(login!=null){
+            if(login>0){
                 save=true;
+            }else {
+                throw new ServiceException(StatusCode.PN_ERROR);
             }
         }catch (Exception e){
             throw new ServiceException(StatusCode.SYS_ERROR);
@@ -32,11 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer registerUser(User user) {
-        Integer integer=null;
+    public Integer registerUser(String name,String password,String email) {
+        Integer integer=0;
         try {
-            integer = userMapper.addUser(user);
-            if(integer==null){
+            integer = userMapper.addUser(name,password,email);
+            if(integer==0){
                 throw new ServiceException(StatusCode.REGISTER_ERROR);
             }
         }catch (Exception e){

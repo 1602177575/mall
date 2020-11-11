@@ -27,7 +27,7 @@ public interface UserCommentsService {
 
     /**
      * 新增评论
-     * @param userComments
+     * @param userCommentsDto
      * @return
      */
     Integer insertUserComments(UserCommentsDto userCommentsDto);

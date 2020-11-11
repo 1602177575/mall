@@ -34,6 +34,12 @@ public interface CategoryMapper {
      */
     List<Product> selectCategoryList(@Param("pid") Integer pid,@Param("curPage")Integer curPage,@Param("pageSize")Integer pageSize);
 
+    /**
+     * 获取分类的商品数量
+     * @param cid
+     * @return
+     */
+    Integer selectSumList(@Param("cid")Integer cid);
 
     /**
      * 查询前几条分类的名字

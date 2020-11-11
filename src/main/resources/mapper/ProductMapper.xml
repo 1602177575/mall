@@ -40,6 +40,7 @@
 
 
     <sql id="product">
+
         product_name
                 ,product_title
                 ,description
@@ -50,9 +51,11 @@
                 ,gift_point
                 ,category_id
                 ,delete_status
+
     </sql>
 
     <sql id="details">
+
         id,
         pid,
         product_id,
@@ -69,33 +72,48 @@
         packing,
         subject,
         facade,system,cpu,notwork,stockpile,screen
+
     </sql>
 
 
     <select id="selectProductByName" resultMap="BaseResultMap">
+
         select
+
         <include refid="product"/>
+
         from t_product
         where product_name like concat('%', #{pName}, '%')
+
     </select>
 
 
     <select id="selectProductDetails" resultMap="BaseResultDetailsMap">
+
         select
+
         <include refid="details"/>
+
         from t_product as p left join t_details as d
         on p.product_id=d.pid
         where p.product_id=#{pid}
+
     </select>
 
 
     <select id="selectLikeTop" resultMap="BaseResultMap">
+
         select
+
         <include refid="product"/>
+
         from t_product
         limit 5
+
     </select>
+
     <select id="selectByProductId" resultMap="BaseResultMap">
+
         select product_id,
                product_name,
                product_title,
@@ -110,8 +128,11 @@
         from t_product
         where delete_status = 0
           and product_id = #{productId}
+
     </select>
+
     <select id="selectListByProductIds" resultMap="BaseResultMap">
+
         select product_id,
                product_name,
                product_title,
@@ -126,8 +147,14 @@
         from t_product
                 where delete_status = 0
                   and product_id in
+
         <foreach collection="productIds" item="productId" open="(" close=")" separator=",">
             #{productId}
         </foreach>
+    </select>
+
+
+    <select id="isExist">
+
     </select>
 </mapper>

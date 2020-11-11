@@ -42,5 +42,10 @@ select <include refid="product"/>
 from t_product
 where category_id=#{cid} limit #{value}
 </select>
-   
+
+<select id="selectSumList" resultType="integer">
+select count(*) from t_product where category_id=#{cid}
+</select>
+
+
 </mapper>

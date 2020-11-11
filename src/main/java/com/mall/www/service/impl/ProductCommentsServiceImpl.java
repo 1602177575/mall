@@ -36,11 +36,24 @@ public class ProductCommentsServiceImpl implements ProductCommentsService {
 
     @Override
     public List<ProductCommentsVo> selectProductCommentsByUid(Integer uid) {
-        List<ProductComments> pro=null;
+
         List<ProductCommentsVo> list=new ArrayList<>();
         try {
-            pro = mapper.selectProductCommentsByUid(uid);
-            BeanUtils.copyProperties(pro,list);
+            List<ProductComments> pro = mapper.selectProductCommentsByUid(uid);
+
+            //    private Integer uid; //用户外键
+            //    private String issue; //用户提问
+            //    private String answer; //商家答复
+            //    private Date commentsTime; //提问回答时间
+            pro.forEach(p->{
+                ProductCommentsVo vo = new ProductCommentsVo();
+                vo.setUid(p.getUid());
+                vo.setIssue(p.getIssue());
+                vo.setAnswer(p.getAnswer());
+                vo.setCommentsTime(p.getCommentsTime());
+                list.add(vo);
+            });
+
         }catch (Exception e){
             throw new ServiceException(StatusCode.SERVER_ERROR);
         }finally {

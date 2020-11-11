@@ -17,10 +17,12 @@ public interface UserMapper {
 
     /**
      * 增加用户
-     * @param user
+     * @param name 账号
+     * @param password ，密码
+     * @param email 邮箱
      * @return
      */
-    Integer addUser(@Param("user") User user);
+    Integer addUser(@Param("name")String name,@Param("pwd")String password,@Param("em")String email);
 
     /**
      * 修改密码

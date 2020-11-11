@@ -8,6 +8,7 @@ import com.mall.www.entity.Product;
 import com.mall.www.exception.ServiceException;
 import com.mall.www.mapper.ProductMapper;
 import com.mall.www.service.ProductService;
+import com.mall.www.utils.ColaBeanUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -47,10 +48,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public DetailsProductVo selectProductDetails(Long pid) {
-        DetailsProductVo vo = new DetailsProductVo();
+        DetailsProductVo vo = null;
         try {
             DetailsProductBo pro = productMapper.selectProductDetails(pid);
-            BeanUtils.copyProperties(pro,vo);
+            if(pro==null){
+                throw new ServiceException(StatusCode.SERVER_ERROR);
+            }else {
+                vo = new DetailsProductVo();
+                  ColaBeanUtils.copyProperties(pro,vo);
+            }
         }catch (Exception e){
             throw new ServiceException(StatusCode.SERVER_ERROR);
         }finally{

@@ -1,6 +1,8 @@
 package com.mall.www.service;
 
 
+import com.mall.www.common.vo.CategoryVo;
+import com.mall.www.common.vo.ProductVo;
 import org.springframework.stereotype.Service;
 
 
@@ -17,7 +19,7 @@ public interface CategoryService {
      * @param pageSize 一页多少数据
      * @return
      */
-     List<Object> selectCategoryByIdList(Integer pid, Integer curPage, Integer pageSize);
+    CategoryVo selectCategoryByIdList(Integer pid, Integer curPage, Integer pageSize);
 
 
     /**

@@ -17,7 +17,6 @@ public interface ProductMapper {
      */
     List<Product> selectProductByName(@Param("pName") String name);
 
-
     /**
      * 查询商品的详情信息
      * @param pid 产品ID

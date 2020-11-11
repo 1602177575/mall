@@ -20,7 +20,7 @@ public interface UserService {
      * @param
      * @return
      */
-    Integer registerUser(User user);
+    Integer registerUser(String name,String password,String email);
 
 
     /**

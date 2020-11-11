@@ -20,40 +20,48 @@ public class UserCommentsServiceImpl implements UserCommentsService {
     UserCommentsMapper mapper;
 
     @Override
-    public List<UserCommentsVo> selectUserCommentsByUser(Integer uid) {
-        List<UserCommentsVo> list=null;
+    public List<UserCommentsVo> selectUserCommentsByUser(Integer userId) {
+        List<UserCommentsVo> list = new ArrayList<>();
         try {
-            List<UserComments> userComments = mapper.selectUserCommentsByUser(uid);
-        }catch (Exception e){
+            List<UserComments> uc = mapper.selectCom(userId);
+            uc.forEach(com -> {
+                UserCommentsVo vo = new UserCommentsVo();
+                vo.setAnswer(com.getAnswer());
+                vo.setCommentsTime(com.getCommentsTime());
+                vo.setComment(com.getComment());
+                vo.setEvaluate(com.getEvaluate());
+                list.add(vo);
+            });
+        } catch (Exception e) {
             throw new ServiceException(StatusCode.SERVER_ERROR);
-        }finally {
+        } finally {
             return list;
         }
     }
 
     @Override
     public List<UserCommentsVo> selectUserCommentsByPro(Long pid) {
-        List<UserCommentsVo> list=null;
+        List<UserCommentsVo> list = new ArrayList<>();
         try {
             List<UserComments> userComments = mapper.selectUserCommentsByPro(pid);
-            BeanUtils.copyProperties(userComments,list);
-        }catch (Exception e){
+            BeanUtils.copyProperties(userComments, list);
+        } catch (Exception e) {
             throw new ServiceException(StatusCode.SERVER_ERROR);
-        }finally {
+        } finally {
             return list;
         }
     }
 
     @Override
     public Integer insertUserComments(UserCommentsDto userCommentsDto) {
-            Integer integer=null;
+        Integer integer = 0;
         UserComments userComments = new UserComments();
         try {
-            BeanUtils.copyProperties(userCommentsDto,userComments);
+            BeanUtils.copyProperties(userCommentsDto, userComments);
             integer = mapper.insertUserComments(userComments);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ServiceException(StatusCode.SERVER_ERROR);
-        }finally {
+        } finally {
             return integer;
         }
 

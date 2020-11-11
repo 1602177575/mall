@@ -2,6 +2,7 @@ package com.mall.www.controller;
 
 
 import com.mall.www.common.ResponseEntity;
+import com.mall.www.common.vo.CategoryVo;
 import com.mall.www.common.vo.ProductVo;
 import com.mall.www.service.CategoryService;
 import com.mall.www.service.ProductService;
@@ -10,6 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 分类
+ * 查看分类下商品数据
+ * 模糊查询商品名字
+ * 商品下的排序
+ */
 @RestController
 @RequestMapping("/cate")
 public class CategoryController {
@@ -27,8 +34,8 @@ public class CategoryController {
      * @param cid 必传 类别ID
      * @return
      */
-    @RequestMapping("/category/{id}/{p}")
-    public ResponseEntity<List<Object>> SelectCategory(@PathVariable("id") Integer cid,@PathVariable("p") @RequestParam(defaultValue = "1" ) Integer curPage, @RequestParam(defaultValue="8") Integer pageSize){
+    @RequestMapping(value = "/category/{ids}/{p}")
+    public ResponseEntity<CategoryVo> SelectCategory(@PathVariable(value = "ids",required=true) Integer cid, @PathVariable(value = "p")  Integer curPage, @RequestParam(defaultValue="8") Integer pageSize){
         return  ResponseEntity.success(categoryService.selectCategoryByIdList(cid, curPage, pageSize));
     }
 
@@ -43,15 +50,6 @@ public class CategoryController {
     }
 
 
-    /**
-     * 根据其商品的ID 查询其商品详情信息
-     * @param pid
-     * @return
-     */
-    @PostMapping("/details")
-    public ResponseEntity<Object> selectProductDetails(@RequestParam(required = true) Long pid){
-        return ResponseEntity.success(productService.selectProductDetails(pid));
-    }
 
 
 }

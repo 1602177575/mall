@@ -1,7 +1,7 @@
 package com.mall.www.controller;
 
 import com.mall.www.common.ResponseEntity;
-import com.mall.www.common.dto.ProductCommentsDto;
+import com.mall.www.common.dto.UserCommentsDto;
 import com.mall.www.common.vo.ProductCommentsVo;
 import com.mall.www.common.vo.UserCommentsVo;
 import com.mall.www.entity.User;
@@ -16,6 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 用户登陆判断
+ * 注册
+ * 修改信息
+ * 修改密码
+ * 查看用户的评价
+ * 查看用户的商品咨询
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -34,9 +42,8 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public boolean login(@RequestParam(required = true) String name,@RequestParam(required = true)  String password){
-        boolean login = userService.login(name, password);
-        return login;
+    public ResponseEntity<Boolean> login(@RequestParam(required = true) String name,@RequestParam(required = true)  String password){
+        return ResponseEntity.success(userService.login(name,password));
     }
 
     /**
@@ -48,8 +55,7 @@ public class UserController {
      */
     @PostMapping("/register")
     public ResponseEntity<Integer> register(@RequestParam(required = true) String name, @RequestParam(required = true) String password, @RequestParam(required = true) String email){
-        User user = new User(name,password,email);
-       return ResponseEntity.success(userService.registerUser(user));
+       return ResponseEntity.success(userService.registerUser(name,password,email));
     }
 
     /**
@@ -76,7 +82,7 @@ public class UserController {
     }
 
     /**
-     * 查询所有的评价
+     * 查询用户的所有的用户评价
      * @param uid
      * @return
      */
@@ -85,13 +91,17 @@ public class UserController {
         return ResponseEntity.success(userCommentsService.selectUserCommentsByUser(uid));
     }
 
+
+
     /**
-     * 查询用户的所有商品咨询
-     * @param uid
+     * 根据用户ID 和商品ID  创建评价内容
+     * 创建用户对商品的评价
+     * @param userCommentsDto
      * @return
      */
-    public ResponseEntity<List<ProductCommentsVo>> selectProCommentsByUid(@RequestParam(required = true)Integer uid){
-        return ResponseEntity.success(productCommentsService.selectProductCommentsByUid(uid));
+    @PostMapping("/addUserComments")
+    public ResponseEntity<Integer> insertUserComments(UserCommentsDto userCommentsDto){
+        return ResponseEntity.success(userCommentsService.insertUserComments(userCommentsDto));
     }
 
 

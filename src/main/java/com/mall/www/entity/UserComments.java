@@ -30,7 +30,7 @@ public class UserComments {
     /**
      * 评论内容
      */
-    private String content;
+    private String comment;
 
     /**
      * 其他回复

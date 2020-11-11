@@ -24,12 +24,12 @@
 </sql>
 
 <select id="login" resultType="integer">
-select count(*) from user where name=#{name} and password=#{pwd}
+select id from user where name=#{name} and password=#{pwd}
 </select>
 
 <insert id="addUser">
 insert into user (name,password,email)
-values (#{user.name},#{user.password},#{user.email})
+values (#{name},#{pwd},#{em})
 </insert>
 
 <update id="upPassword">

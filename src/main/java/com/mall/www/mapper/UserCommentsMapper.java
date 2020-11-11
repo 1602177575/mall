@@ -13,7 +13,7 @@ public interface UserCommentsMapper {
      * @param uid
      * @return
      */
-    List<UserComments> selectUserCommentsByUser(@Param("uid") Integer uid);
+    List<UserComments> selectCom(@Param("uid") Integer uid);
 
 
     /**

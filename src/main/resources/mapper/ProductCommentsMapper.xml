@@ -8,11 +8,11 @@
     <result property="pid" column="pid"/>
     <result property="uid" column="uid"/>
     <result property="answer" column="answer"/>
-    <result property="commentsTime" column="commentsTime"/>
+    <result property="commentsTime" column="comments_Time"/>
     <result property="issue" column="issue"/>
 </resultMap>
 <sql id="productComments">
- id,pid,uid,answer,commentsTime,issue
+ id,pid,uid,answer,comments_Time,issue
 </sql>
 
 <select id="selectProductCommentsByPro" resultMap="BaseResultMap">
