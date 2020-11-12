@@ -2,6 +2,7 @@ package com.mall.www.controller;
 
 import com.mall.www.common.ResponseEntity;
 import com.mall.www.common.dto.OrderDto;
+import com.mall.www.common.dto.OrderSearchDto;
 import com.mall.www.common.vo.OrderPrepareVo;
 import com.mall.www.service.OrderService;
 import org.apache.ibatis.annotations.Param;
@@ -91,5 +92,16 @@ public class OrderController {
     @GetMapping("/get")
     public ResponseEntity get(Long orderId) {
         return ResponseEntity.success(orderService.getOrder(orderId));
+    }
+
+    /**
+     * 根据条件查询用户的订单信息
+     *
+     * @param orderSearchDto
+     * @return
+     */
+    @PostMapping("/condition")
+    public ResponseEntity condition(@RequestBody OrderSearchDto orderSearchDto) {
+        return ResponseEntity.success(orderService.listByCondition(orderSearchDto));
     }
 }
