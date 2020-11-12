@@ -1,10 +1,9 @@
 package com.mall.www.controller;
 
 import com.mall.www.common.ResponseEntity;
+import com.mall.www.common.dto.ReturnOrderDto;
 import com.mall.www.service.ReturnOrderService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -23,5 +22,16 @@ public class ReturnOrderController {
     @GetMapping("/list")
     public ResponseEntity list(Long userId) {
         return ResponseEntity.success(returnOrderService.list(userId));
+    }
+
+    /**
+     * 申请退货
+     *
+     * @param returnOrderDto
+     * @return
+     */
+    @PostMapping("/apply")
+    public ResponseEntity apply(@RequestBody ReturnOrderDto returnOrderDto) {
+        return ResponseEntity.success(returnOrderService.create(returnOrderDto));
     }
 }
