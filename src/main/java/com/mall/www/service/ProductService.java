@@ -30,6 +30,6 @@ public interface ProductService {
      * 展示销量最好的 猜你喜欢产品
      * @return
      */
-    List<Object> selectLikeTop();
+    List<ProductVo> selectLikeTop();
 
 }

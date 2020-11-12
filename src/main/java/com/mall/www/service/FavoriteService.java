@@ -16,7 +16,6 @@ public interface FavoriteService {
      */
     List<FavoriteVo> selectFavoriteByUid(Integer uid);
 
-
     /**
      * 添加收藏
      * @param uid 用户ID
@@ -32,4 +31,13 @@ public interface FavoriteService {
      * @return
      */
     Integer deleteFavorite(List<Integer> tid);
+
+
+    /**
+     * 判断用户是否收藏过该商品
+     * @param uid
+     * @param pid
+     * @return
+     */
+    Integer isFavoriteExist(Integer uid,Long pid);
 }

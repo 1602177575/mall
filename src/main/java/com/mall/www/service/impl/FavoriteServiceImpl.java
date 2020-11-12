@@ -20,7 +20,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public List<FavoriteVo> selectFavoriteByUid(Integer uid) {
-        List<FavoriteBo> bo=new ArrayList<>();
+        List<FavoriteBo> bo=null;
         List<FavoriteVo> list=new ArrayList<>();
         try {
                  bo  = favoriteMapper.selectFavoriteByUid(uid);
@@ -41,9 +41,13 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public Integer insertFavorite(Integer uid, Long pid) {
+    public Integer  insertFavorite(Integer uid, Long pid) {
         Integer integer=0;
         try {
+            if(favoriteMapper.isFavoriteExist(uid,pid)==0){
+                //收藏夹中已经由该商品 无需重复收藏
+                return integer;
+            }
             integer= favoriteMapper.insertFavorite(uid, pid);
         }catch (Exception e){
             throw new ServiceException(StatusCode.SERVER_ERROR);
@@ -56,6 +60,17 @@ public class FavoriteServiceImpl implements FavoriteService {
         Integer integer=0;
         try {
             integer= favoriteMapper.deleteFavorite(tid);
+        }catch (Exception e){
+            throw new ServiceException(StatusCode.SERVER_ERROR);
+        }
+        return integer;
+    }
+
+    @Override
+    public Integer isFavoriteExist(Integer uid, Long pid) {
+        Integer integer=0;
+        try {
+            integer= favoriteMapper.isFavoriteExist(uid,pid);
         }catch (Exception e){
             throw new ServiceException(StatusCode.SERVER_ERROR);
         }

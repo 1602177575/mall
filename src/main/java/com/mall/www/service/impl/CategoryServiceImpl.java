@@ -33,18 +33,17 @@ public class CategoryServiceImpl implements CategoryService {
         //当前页数无法大于最大页数 无法小于最小页数
         int thisCurPage=curPage>number?number:curPage<number?1:curPage;
         try {
-        List<Product> products = categoryMapper.selectCategoryList(cid, ((thisCurPage - 1) * pageSize), pageSize);
-        products.forEach(product->{
-            ProductVo cvo = new ProductVo();
-            cvo.setProduct_id(product.getProductId());
-            cvo.setPic(product.getPic());
-            cvo.setProductName(product.getProductName());
-            cvo.setPrice(product.getPrice());
-            cvo.setPromotionPrice(product.getPromotionPrice());
-            pvo.add(cvo);
-        });
-
-        vo.setList(pvo);
+            List<Product> products = categoryMapper.selectCategoryList(cid, ((thisCurPage - 1) * pageSize), pageSize);
+            products.forEach(product->{
+                ProductVo cvo = new ProductVo();
+                cvo.setProduct_id(product.getProductId());
+                cvo.setPic(product.getPic());
+                cvo.setProductName(product.getProductName());
+                cvo.setPrice(product.getPrice());
+                cvo.setPromotionPrice(product.getPromotionPrice());
+                pvo.add(cvo);
+            });
+            vo.setList(pvo);
         }catch (Exception e){
             throw new ServiceException(StatusCode.SYS_ERROR);
         }

@@ -26,7 +26,7 @@ public class HomeVo {
     /**
      * 猜你喜欢
      */
-    List<Object> like;
+    List<ProductVo> like;
 
 
 }
