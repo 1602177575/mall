@@ -42,4 +42,21 @@
         set delete_status=1
         where order_id = #{orderId};
     </update>
+    <select id="selectByOrderIdAndProductId" resultMap="BaseResultMap">
+        select order_item_id,
+               order_id,
+               order_number,
+               product_id,
+               product_pic,
+               product_name,
+               product_price,
+               product_quantity,
+               delivery_type,
+               tracking_number,
+               delete_status
+        from t_order_item
+        where delete_status = 0
+          and order_id = #{orderId}
+          and product_id = #{productId};
+    </select>
 </mapper>

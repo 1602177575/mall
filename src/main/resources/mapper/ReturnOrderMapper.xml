@@ -10,18 +10,94 @@
         <result property="refundType" column="refund_type"/>
         <result property="status" column="status"/>
         <result property="userId" column="user_id"/>
+        <result property="giftPoint" column="gift_point"/>
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="productPic" column="product_pic"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productQuantity" column="product_quantity"/>
+        <result property="refundInstructions" column="refund_instructions"/>
+        <result property="returnReason" column="return_reason"/>
     </resultMap>
     <select id="selectListByUserId" resultMap="BaseResultMap">
         select return_order_id,
                user_id,
                order_id,
                order_number,
+               return_reason,
                refund_type,
+               refund_instructions,
+               product_id,
+               product_name,
+               product_pic,
+               product_price,
+               product_quantity,
+               gift_point,
                apply_time,
                status,
                delete_status
         from t_return_order
         where delete_status = 0
           and user_id = #{userId};
+    </select>
+    <insert id="insert">
+        insert into t_return_order(
+                user_id,
+                order_id,
+                order_number,
+                return_reason,
+                refund_type,
+        <if test="returnOrder.refundInstructions != null">
+            refund_instructions,
+        </if>
+        product_id,
+        product_name,
+        product_pic,
+        product_price,
+        product_quantity
+        <if test="returnOrder.giftPoint != null">
+            ,gift_point
+        </if>)
+            values (
+            #{returnOrder.userId},
+            #{returnOrder.orderId},
+            #{returnOrder.orderNumber},
+            #{returnOrder.returnReason},
+            #{returnOrder.refundType},
+        <if test="returnOrder.refundInstructions != null">
+            #{returnOrder.refundInstructions},
+        </if>
+        #{returnOrder.productId},
+        #{returnOrder.productName},
+        #{returnOrder.productPic},
+        #{returnOrder.productPrice},
+        #{returnOrder.productQuantity}
+        <if test="returnOrder.giftPoint != null">
+            ,#{returnOrder.giftPoint}
+        </if>
+        )
+    </insert>
+    <select id="selectByUserIdAndOrderIdAndProductId" resultMap="BaseResultMap">
+        select return_order_id,
+               user_id,
+               order_id,
+               order_number,
+               return_reason,
+               refund_type,
+               refund_instructions,
+               product_id,
+               product_name,
+               product_pic,
+               product_price,
+               product_quantity,
+               gift_point,
+               apply_time,
+               status,
+               delete_status
+        from t_return_order
+        where delete_status = 0
+          and user_id = #{userId}
+          and order_id = #{orderId}
+          and product_id = #{productId};
     </select>
 </mapper>
