@@ -45,4 +45,12 @@ member=#{upUser.member},income=#{upUser.income},is_cart=#{upUser.is_cart}
 where name=#{upUser.name}
 </update>
 
+<update id="upPasswordByEmail">
+update user set password=#{newPwd} where email=#{email}
+</update>
+
+<select id="isEmailExist" resultType="integer">
+select count(*) from user where email=#{email}
+</select>
+
 </mapper>

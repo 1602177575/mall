@@ -26,7 +26,7 @@ public interface UserCommentsMapper {
 
     /**
      * 新增评论
-     * @param userComments
+     * @param userComments 输入评论数据
      * @return
      */
     Integer insertUserComments(@Param("uc")UserComments userComments);
