@@ -1,5 +1,6 @@
 package com.mall.www.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class ReturnOrder {
     private Long userId;
 
     /**
-     * 商品id
+     * 订单id
      */
     private Long orderId;
 
@@ -26,9 +27,49 @@ public class ReturnOrder {
     private String orderNumber;
 
     /**
-     * 退款类型
+     * 退货原因
      */
-    private String refundType;
+    private String returnReason;
+
+    /**
+     * 退款支付类型
+     */
+    private Integer refundType;
+
+    /**
+     * 退款说明
+     */
+    private String refundInstructions;
+
+    /**
+     * 商品id
+     */
+    private Long productId;
+
+    /**
+     * 商品名称
+     */
+    private String productName;
+
+    /**
+     * 商品图片
+     */
+    private String productPic;
+
+    /**
+     * 商品的单价
+     */
+    private BigDecimal productPrice;
+
+    /**
+     * 商品的数量
+     */
+    private Integer productQuantity;
+
+    /**
+     * 赠送的积分
+     */
+    private Integer giftPoint;
 
     /**
      * 申请时间
