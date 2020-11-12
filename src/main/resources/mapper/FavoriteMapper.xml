@@ -50,4 +50,9 @@ where id in
 </foreach>
 </update>
 
+<select id="isFavoriteExist" resultType="integer">
+select count(*) from t_favorite where uid=#{uid} and pid=#{pid}
+</select>
+
+
 </mapper>

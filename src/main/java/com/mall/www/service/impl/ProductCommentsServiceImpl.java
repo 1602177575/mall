@@ -23,10 +23,18 @@ public class ProductCommentsServiceImpl implements ProductCommentsService {
     @Override
     public List<ProductCommentsVo> selectProductCommentsByPro(Long pid) {
         List<ProductComments> pro=null;
-        List<ProductCommentsVo> list=null;
+        List<ProductCommentsVo> list=new ArrayList<>();
         try {
             pro = mapper.selectProductCommentsByPro(pid);
-            BeanUtils.copyProperties(pro,list);
+            pro.forEach(p->{
+                ProductCommentsVo vo = new ProductCommentsVo();
+                vo.setUid(p.getUid());
+                vo.setIssue(p.getIssue());
+                vo.setAnswer(p.getAnswer());
+                vo.setCommentsTime(p.getCommentsTime());
+                list.add(vo);
+            });
+
         }catch (Exception e){
             throw new ServiceException(StatusCode.SERVER_ERROR);
         }finally {

@@ -29,4 +29,13 @@ public interface FavoriteMapper {
      * @return
      */
     Integer deleteFavorite(@Param("tid")List<Integer> tid);
+
+
+    /**
+     * 判断用户是否已经收藏过该商品
+     * @param uid
+     * @param pid
+     * @return
+     */
+    Integer isFavoriteExist(@Param("uid") Integer uid,@Param("pid") Long pid);
 }
