@@ -39,4 +39,21 @@ public interface UserMapper {
      * @return
      */
     Integer upDateUser(@Param("upUser")User user);
+
+
+    /**
+     * 用户通过邮箱验证码 修改密码
+     * @param email
+     * @param newPwd
+     * @return
+     */
+    Integer upPasswordByEmail(@Param("email") String email,@Param("newPwd") String newPwd);
+
+
+    /**
+     * 判断邮箱是否存在
+     * @param email
+     * @return
+     */
+    Integer isEmailExist(@Param("email") String email);
 }

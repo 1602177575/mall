@@ -47,5 +47,20 @@ public interface UserService {
      */
     Integer upDateUser(User user);
 
+    /**
+     *
+     * @param email 用户邮箱
+     * @param newPwd 用户新密码
+     * @return
+     */
+    Integer EmailUpPassword(String email,String newPwd);
+
+
+    /**
+     * 判断邮箱是否存在
+     * @param email
+     * @return 存在返回1  不存在返回0
+     */
+    Integer isEmailExist(String email);
 
 }

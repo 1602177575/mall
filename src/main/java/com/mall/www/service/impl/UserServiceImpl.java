@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer upPassword(String name, String password,String newPwd) {
-        Integer integer=null;
+        Integer integer=0;
         try {
             integer = userMapper.upPassword(name, password,newPwd);
         }catch (Exception e){
@@ -67,9 +67,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer upDateUser(User user) {
-        Integer integer=null;
+        Integer integer=0;
         try {
             integer = userMapper.upDateUser(user);
+        }catch (Exception e){
+            throw new ServiceException(StatusCode.SYS_ERROR);
+        }finally {
+            return integer;
+        }
+    }
+
+    @Override
+    public Integer EmailUpPassword(String email, String newPwd) {
+        Integer integer=0;
+        try {
+            integer = userMapper.upPasswordByEmail(email,newPwd);
+        }catch (Exception e){
+            throw new ServiceException(StatusCode.SYS_ERROR);
+        }finally {
+            return integer;
+        }
+    }
+
+
+    @Override
+    public Integer isEmailExist(String email) {
+        Integer integer=0;
+        try {
+            integer = userMapper.isEmailExist(email);
         }catch (Exception e){
             throw new ServiceException(StatusCode.SYS_ERROR);
         }finally {
