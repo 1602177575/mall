@@ -1,6 +1,7 @@
 package com.mall.www.mapper;
 
 import com.mall.www.common.bo.OrderBo;
+import com.mall.www.common.dto.OrderSearchDto;
 import com.mall.www.entity.Order;
 import org.apache.ibatis.annotations.Param;
 
@@ -66,4 +67,12 @@ public interface OrderMapper {
      * @return
      */
     OrderBo selectOrderBoByOrderId(@Param("orderId") Long orderId);
+
+    /**
+     * 根据条件查询订单信息
+     *
+     * @param searchDto
+     * @return
+     */
+    List<OrderBo> selectListByCondition(@Param("searchDto") OrderSearchDto searchDto);
 }

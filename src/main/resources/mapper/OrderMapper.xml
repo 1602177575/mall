@@ -136,4 +136,60 @@
         where o.delete_status = 0
           and o.order_id = #{orderId};
     </select>
+
+    <select id="selectListByCondition" resultMap="OrderBoResultMap">
+        select o.order_id,
+               o.order_number,
+               o.user_id,
+               o.payment_status,
+               o.payment_type,
+               o.total_money,
+               o.create_time,
+               o.name,
+               o.area,
+               o.detail_address,
+               o.phone,
+               o.fixed_phone,
+               o.postcode,
+               o.order_status,
+               o.coupon_id,
+               o.gift_point,
+               o.delete_status,
+               oi.order_item_id,
+               oi.order_id,
+               oi.order_number,
+               oi.product_id,
+               oi.product_pic,
+               oi.product_name,
+               oi.product_price,
+               oi.product_quantity,
+               oi.delivery_type,
+               oi.tracking_number,
+               oi.delete_status
+        from t_order o
+                     left join t_order_item oi on o.order_id = oi.order_id
+                where o.delete_status = 0
+                  and o.user_id = #{searchDto.userId}
+        <if test="searchDto.orderNumber != null">
+            and o.order_number = #{searchDto.orderNumber}
+        </if>
+        <if test="searchDto.productName != null">
+            and oi.product_name = #{searchDto.productName}
+        </if>
+        <if test="searchDto.beginTime != null and searchDto.endTime != null">
+            and (o.create_time between #{searchDto.beginTime} and #{searchDto.endTime})
+        </if>
+        <if test="searchDto.name != null">
+            and o.name = #{searchDto.name}
+        </if>
+        <if test="searchDto.paymentType != null">
+            and o.payment_type = #{searchDto.paymentType}
+        </if>
+        <if test="searchDto.deliveryType != null">
+            and oi.delivery_type = #{searchDto.deliveryType}
+        </if>
+        <if test="searchDto.minMoney != null and searchDto.maxMoney != null">
+            and (o.total_money between #{searchDto.minMoney} and #{searchDto.maxMoney})
+        </if>
+    </select>
 </mapper>
