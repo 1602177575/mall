@@ -29,4 +29,13 @@ public interface OrderItemMapper {
      * @return
      */
     int deleteByOrderId(@Param("orderId") Long orderId);
+
+    /**
+     * 根据订单id和商品id查询订单详情信息
+     *
+     * @param orderId 订单id
+     * @param product 商品id
+     * @return
+     */
+    OrderItem selectByOrderIdAndProductId(@Param("orderId") Long orderId, @Param("productId") Long product);
 }
