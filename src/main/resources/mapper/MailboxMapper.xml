@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.www.mapper.MailboxMapper">
+    <resultMap id="BaseResultMap" type="Mailbox">
+        <id property="mailboxId" column="mailbox_id"/>
+        <result property="addresser" column="addresser"/>
+        <result property="content" column="content"/>
+        <result property="deleteStatus" column="delete_status"/>
+        <result property="mailboxStatus" column="mailbox_status"/>
+        <result property="sendTime" column="send_time"/>
+        <result property="status" column="status"/>
+        <result property="title" column="title"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+    <select id="selectListByUserId" resultMap="BaseResultMap">
+        select mailbox_id,
+               user_id,
+               title,
+               content,
+               addresser,
+               send_time,
+               mailbox_status,
+               status,
+               delete_status
+        from t_mailbox
+        where delete_status = 0
+          and user_id = #{userId};
+    </select>
+    <update id="updateMailboxStatus">
+        update t_mailbox
+        set mailbox_status=#{status} where mailbox_id in
+        <foreach collection="mailboxIds" open="(" separator="," close=")" item="mailboxId">
+            #{mailboxId}
+        </foreach>
+    </update>
+    <update id="delete">
+        update t_mailbox
+        set delete_status=1 where mailbox_id in
+        <foreach collection="mailboxIds" open="(" separator="," close=")" item="mailboxId">
+            #{mailboxId}
+        </foreach>
+    </update>
+</mapper>
