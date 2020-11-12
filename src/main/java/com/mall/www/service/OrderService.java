@@ -1,6 +1,7 @@
 package com.mall.www.service;
 
 import com.mall.www.common.dto.OrderDto;
+import com.mall.www.common.dto.OrderSearchDto;
 import com.mall.www.common.vo.OrderPrepareVo;
 import com.mall.www.common.vo.OrderVo;
 
@@ -71,4 +72,12 @@ public interface OrderService {
      * @return
      */
     OrderVo getOrder(Long orderId);
+
+    /**
+     * 根据条件查询用户的订单信息
+     *
+     * @param orderSearchDto        封装的条件对象
+     * @return
+     */
+    List<OrderVo> listByCondition(OrderSearchDto orderSearchDto);
 }

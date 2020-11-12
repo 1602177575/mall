@@ -5,6 +5,7 @@ import com.mall.www.common.bo.OrderBo;
 import com.mall.www.common.dto.CartsDto;
 import com.mall.www.common.dto.OrderDto;
 import com.mall.www.common.dto.OrderItemDto;
+import com.mall.www.common.dto.OrderSearchDto;
 import com.mall.www.common.utils.ColaBeanUtils;
 import com.mall.www.common.utils.SnowflakeIdUtils;
 import com.mall.www.common.vo.*;
@@ -380,6 +381,29 @@ public class OrderServiceImpl implements OrderService {
             throw new ServiceException(StatusCode.SERVER_ERROR);
         } finally {
             return orderVo;
+        }
+    }
+
+    /**
+     * @param orderSearchDto 封装的条件对象
+     * @return
+     */
+    @Override
+    public List<OrderVo> listByCondition(OrderSearchDto orderSearchDto) {
+        List<OrderVo> orderVos = new ArrayList<>();
+        try {
+            List<OrderBo> orderBos = orderMapper.selectListByCondition(orderSearchDto);
+            orderBos.forEach(orderBo -> {
+                OrderVo orderVo = new OrderVo();
+                BeanUtils.copyProperties(orderBo, orderVo);
+                List<OrderItemVo> orderItemVos = ColaBeanUtils.copyListProperties(orderBo.getOrderItemList(), OrderItemVo::new);
+                orderVo.setProductList(orderItemVos);
+                orderVos.add(orderVo);
+            });
+        } catch (Exception e) {
+            throw new ServiceException(StatusCode.SERVER_ERROR);
+        } finally {
+            return orderVos;
         }
     }
 
