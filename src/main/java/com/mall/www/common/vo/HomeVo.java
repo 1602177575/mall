@@ -18,11 +18,20 @@ public class HomeVo {
     List<String> Tile;
 
     /**
+     * 广告滚动栏
+     */
+    List<ScrollBarVo> ScrollBar;
+
+    /**
+     * 广告推荐位
+     */
+    List<AdvertisingVo> Advertising;
+    /**
      * 展示前三产品在首页
      */
-    List<Object> first;
-    List<Object> two;
-    List<Object> three;
+    List<ProductVo> first;
+    List<ProductVo> two;
+    List<ProductVo> three;
     /**
      * 猜你喜欢
      */

@@ -26,8 +26,8 @@ select <include refid="userComments"/> from t_user_comments where uid=#{uid}
 
 <insert id="insertUserComments">
 insert into t_user_comments
- (uid, pid, evaluate, content, answer, comments_time)
-VALUES(#{uc.uid},#{uc.pid},#{uc.evaluate},#{uc.comment},#{uc.answer},#{uc.commentsTime})
+ (uid,pid,evaluate,comment,answer)
+VALUES(#{uc.uid},#{uc.pid},#{uc.evaluate},#{uc.comment},#{uc.answer})
 </insert>
 
 </mapper>

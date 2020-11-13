@@ -36,6 +36,6 @@ public interface CategoryService {
      * @param value  展示前几条
      * @return
      */
-     List<Object> selectCategoryTopById(Integer cid,Integer value);
+     List<ProductVo> selectCategoryTopById(Integer cid,Integer value);
 
 }

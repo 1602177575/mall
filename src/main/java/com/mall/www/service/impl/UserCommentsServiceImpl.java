@@ -2,6 +2,7 @@ package com.mall.www.service.impl;
 
 import com.mall.www.common.StatusCode;
 import com.mall.www.common.dto.UserCommentsDto;
+import com.mall.www.common.utils.ColaBeanUtils;
 import com.mall.www.common.vo.UserCommentsVo;
 import com.mall.www.entity.UserComments;
 import com.mall.www.exception.ServiceException;
@@ -57,7 +58,7 @@ public class UserCommentsServiceImpl implements UserCommentsService {
         Integer integer = 0;
         UserComments userComments = new UserComments();
         try {
-            BeanUtils.copyProperties(userCommentsDto, userComments);
+            ColaBeanUtils.copyProperties(userCommentsDto, userComments);
             integer = mapper.insertUserComments(userComments);
         } catch (Exception e) {
             throw new ServiceException(StatusCode.SERVER_ERROR);

@@ -8,10 +8,7 @@ import com.mall.www.entity.User;
 import com.mall.www.service.ProductCommentsService;
 import com.mall.www.service.UserCommentsService;
 import com.mall.www.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -42,7 +39,8 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestParam(required = true) String name,@RequestParam(required = true)  String password){
+    public ResponseEntity<Boolean> login(@RequestParam(required = true,value = "name") String name,
+                                         @RequestParam(required = true,value = "password")  String password){
         return ResponseEntity.success(userService.login(name,password));
     }
 
@@ -54,7 +52,9 @@ public class UserController {
      * @return
      */
     @PostMapping("/register")
-    public ResponseEntity<Integer> register(@RequestParam(required = true) String name, @RequestParam(required = true) String password, @RequestParam(required = true) String email){
+    public ResponseEntity<Integer> register(@RequestParam(required = true) String name,
+                                            @RequestParam(required = true) String password,
+                                            @RequestParam(required = true) String email){
        return ResponseEntity.success(userService.registerUser(name,password,email));
     }
 
@@ -77,7 +77,9 @@ public class UserController {
      * @return
      */
     @PostMapping("/upPassword")
-    public ResponseEntity<Integer> upPassword(@RequestParam(required = true) String name,@RequestParam(required = true)String password,@RequestParam(required = true)String newPwd){
+    public ResponseEntity<Integer> upPassword(@RequestParam(required = true) String name,
+                                              @RequestParam(required = true)String password,
+                                              @RequestParam(required = true)String newPwd){
         return ResponseEntity.success(userService.upPassword(name,password,newPwd));
     }
 
@@ -100,7 +102,8 @@ public class UserController {
      * @return
      */
     @PostMapping("/addUserComments")
-    public ResponseEntity<Integer> insertUserComments(UserCommentsDto userCommentsDto){
+    public ResponseEntity<Integer> insertUserComments(@RequestBody UserCommentsDto userCommentsDto){
+        System.out.println(userCommentsDto.toString());
         return ResponseEntity.success(userCommentsService.insertUserComments(userCommentsDto));
     }
 

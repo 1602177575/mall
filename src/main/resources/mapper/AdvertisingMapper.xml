@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.www.mapper.AdvertisingMapper">
+
+  <resultMap id="BaseResultMap" type="Advertising">
+    <id column="id"  property="id" />
+    <result column="product_id" property="productId" />
+    <result column="advertisement_title"  property="advertisementTitle" />
+    <result column="advertisement_subhead"  property="advertisementSubhead" />
+    <result column="promotion_image"  property="promotionImage" />
+    <result column="is_status"  property="isStatus" />
+  </resultMap>
+
+<resultMap id="AdvertisingMap" type="com.mall.www.common.bo.AdvertisingBo" extends="BaseResultMap">
+    <association property="product" javaType="com.mall.www.entity.Product"
+                     resultMap="com.mall.www.mapper.ProductMapper.BaseResultMap"/>
+</resultMap>
+
+
+<sql id="advertising">
+        a.product_id,
+       a.advertisement_title,
+       a.advertisement_subhead,
+       a.promotion_image,
+       p.product_id,
+        p.product_name,
+        p.product_title,
+        p.description,
+        p.pic,
+        p.album_pics,
+        p.price,
+        p.promotion_price,
+        p.gift_point,
+        p.category_id,
+        p.delete_status
+</sql>
+
+<select id="selectAdvertising" resultMap="AdvertisingMap">
+select <include refid="advertising"/>
+from t_advertising a left join t_product p
+on a.product_id=p.product_id
+where is_status=0
+limit #{value}
+</select>
+
+<insert id="insertAdvertising">
+INSERT INTO t_advertising
+    (product_id, advertisement_title, advertisement_subhead, promotion_image)
+    values (#{at.productId},#{at.advertisementTitle},#{at.advertisementSubhead},#{at.promotionImage})
+</insert>
+
+<update id="deleteAdvertising">
+update t_advertising set is_status=1 where id=#{atId}
+</update>
+
+</mapper>

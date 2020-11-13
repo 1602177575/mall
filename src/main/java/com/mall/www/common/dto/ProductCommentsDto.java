@@ -3,10 +3,11 @@ package com.mall.www.common.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class ProductCommentsDto {
+public class ProductCommentsDto implements Serializable {
     private Integer pid; //商品ID
     private Integer uid; //用户ID
     private String issue; //用户的提问

@@ -63,8 +63,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Object> selectCategoryTopById(Integer cid, Integer value) {
-        List<Object> list=new ArrayList<>();
+    public List<ProductVo> selectCategoryTopById(Integer cid, Integer value) {
+        List<ProductVo> list=new ArrayList<>();
         try {
             List<Product> product = categoryMapper.selectCategoryTopById(cid, value);
             product.forEach(pro->{

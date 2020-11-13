@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.www.mapper.ScrollBarMapper">
+<resultMap id="BaseResultMap" type="ScrollBar">
+<id property="id" column="id"/>
+<result property="productId" column="product_id"/>
+<result property="isStatus" column="is_status"/>
+<result property="scrollImage" column="scroll_image"/>
+</resultMap>
+
+<resultMap id="AdvertisingMap" type="com.mall.www.common.bo.ScrollBarBo" extends="BaseResultMap">
+    <association property="product" javaType="com.mall.www.entity.Product"
+                     resultMap="com.mall.www.mapper.ProductMapper.BaseResultMap"/>
+</resultMap>
+
+<sql id="scrollbar">
+    s.product_id,
+    s.scroll_image,
+    p.product_id,
+    p.product_name,
+    p.product_title,
+    p.description,
+    p.pic,
+    p.album_pics,
+    p.price,
+    p.promotion_price,
+    p.gift_point,
+    p.category_id,
+    p.delete_status
+</sql>
+
+<select id="selectScrollBar" resultMap="AdvertisingMap">
+select <include refid="scrollbar"/>
+from t_scroll_bar s left join  t_product p on s.product_id=s.product_id
+where s.product_id=p.product_id
+limit #{value}
+</select>
+
+<insert id="insertScrollBar">
+insert into t_scroll_bar (product_id, scroll_image)
+VALUES (#{productId},#{scrollImage})
+</insert>
+
+<update id="deleteScrollBar">
+update t_scroll_bar set is_status=1 where id=#{id}
+</update>
+
+</mapper>

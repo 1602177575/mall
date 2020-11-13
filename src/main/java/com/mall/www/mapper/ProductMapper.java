@@ -2,6 +2,7 @@ package com.mall.www.mapper;
 
 import com.mall.www.common.bo.DetailsProductBo;
 import com.mall.www.common.vo.DetailsProductVo;
+import com.mall.www.common.vo.ProductVo;
 import com.mall.www.entity.Product;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,5 +36,11 @@ public interface ProductMapper {
     List<Product> selectLikeTop();
 
 
+    /**
+     * 展示广告滚动栏上的商品
+     * @param value 展示的条数
+     * @return
+     */
+    List<ProductVo> selectScrollBar(Integer value);
 
 }

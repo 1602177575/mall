@@ -19,7 +19,7 @@ public class AddressController {
      * @param userId
      * @return
      */
-    @GetMapping("list")
+    @GetMapping("/list")
     public ResponseEntity list(Long userId) {
         return ResponseEntity.success(addressService.list(userId));
     }
