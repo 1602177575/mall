@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
     public static String hint="注意：此操作可能会修改您的密码、登录邮箱或绑定手机。如非本人操作，请及时登录并修改密码以保证帐户安全" +
             "(工作人员不会向你索取此验证码，请勿泄漏！)";
     public static String S_MTP="smtp.qq.com"; //qq邮箱的SMTP服务器地址
-    public static String S_MTP_PWD="njvwydxyeuvobaea";  //你的stmp密码
+    public static String S_MTP_PWD=" //";  //你的stmp密码
     public static String SYSTEM_EMAIL="1602177575@qq.com"; //服务器邮箱
 
     @Resource
